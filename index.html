@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAUSHIK.CUTS | Professional Video Editor Portfolio</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Favicon & Meta Preview -->
+  <link rel="icon" href="kc-logo.png" />
+  <meta property="og:title" content="KAUSHIK.CUTS | Professional Video Editor Portfolio" />
+  <meta property="og:description" content="Crafting stories through cinematic editing, color, and sound. Discover my portfolio." />
+  <meta property="og:image" content="kc-preview.jpg" />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --primary-color: #ef4444;
+      --dark-bg: #0a0a0a;
+      --mid-bg: #1a1a1a;
+      --text-color: #f9fafb;
+    }
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-color);
+      transition: background-color 0.3s ease;
+      background-image: radial-gradient(circle at 1px 1px, #222 1px, transparent 0);
+      background-size: 20px 20px;
+      scroll-behavior: smooth;
+    }
+
+    .portfolio-header {
+      background-color: var(--mid-bg);
+      border-bottom: 2px solid var(--primary-color);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    }
+
+    .section-title {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--mid-bg);
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+
+    .project-card {
+      background-color: var(--mid-bg);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid #333;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 25px -5px rgba(239, 68, 68, 0.3),
+        0 6px 10px -3px rgba(239, 68, 68, 0.15);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--mid-bg);
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .thumbnail-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      cursor: pointer;
+      background-color: #000;
+    }
+    .thumbnail-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .thumbnail-container .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(239, 68, 68, 0.8);
+      border-radius: 50%;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+    .thumbnail-container:hover .play-button {
+      background-color: rgba(239, 68, 68, 1);
+    }
+
+    #reel .video-container {
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.5);
+      transition: box-shadow 0.3s;
+    }
+    #reel .video-container:hover {
+      box-shadow: 0 0 60px rgba(239, 68, 68, 0.7);
+    }
+
+    /* Fade-in animation */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    [data-animate].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+
+<body class="antialiased min-h-screen">
+  <!-- Header -->
+  <header class="portfolio-header sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <h1 class="text-3xl font-extrabold tracking-tight">
+        <span class="text-white">KAUSHIK</span>
+        <span class="text-red-500">.CUTS</span>
+      </h1>
+      <nav class="space-x-6 hidden md:block">
+        <a href="#work" class="text-sm font-medium text-white hover:text-red-400 transition">Work</a>
+        <a href="#about" class="text-sm font-medium text-white hover:text-red-400 transition">About</a>
+        <a href="#contact" class="text-sm font-medium text-white hover:text-red-400 transition">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Reel Section -->
+    <section id="reel" class="mb-24 text-center" data-animate>
+      <h2 class="text-4xl sm:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-600">
+        Crafting Stories. Driving Vision.
+      </h2>
+      <p class="text-xl text-gray-400 mb-12 max-w-4xl mx-auto">
+        Bridging <b>Cinematography, Acting, and Post-Production</b> to deliver truly resonant visual experiences.
+      </p>
+
+    <div class="thumbnail-container rounded-lg overflow-hidden mb-4">
+  <a href="https://youtube.com/@kvines01?si=qoMFzL67mBivPLcy" target="_blank">
+    <img src="assets/PP.png" alt="Reel Thumbnail">
+    
+  </a>
+</div>
+
+
+
+      <a href="#contact"
+        class="mt-12 inline-block py-3 px-8 rounded-full bg-red-600 text-white font-bold text-lg tracking-wider hover:bg-red-700 transition shadow-2xl shadow-red-500/50">
+        START A PROJECT
+      </a>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="mb-24" data-animate>
+      <h2 class="text-4xl font-bold section-title mb-12">Featured Projects</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Project 1 -->
+        <div class="project-card p-6 rounded-xl shadow-xl">
+          <h3 class="text-xl font-semibold mb-3 text-red-400">Velocity Sneaker Launch (Commercial)</h3>
+          <div class="thumbnail-container rounded-lg overflow-hidden mb-4">
+    <a href="https://youtu.be/6emTX_HF0dk" target="_blank" rel="noopener noreferrer">
+        <img src="assets/colorg.jpg" alt="Velocity Sneaker Launch Thumbnail">
+        <div class="play-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+        </div>
+    </a>
+</div>
+
+          <p class="text-sm text-gray-300">
+            A high-energy commercial focused on dynamic cuts, cinematic color grading, and punchy sound design to
+            maximize product visibility.
+          </p>
+          <p class="text-xs text-red-500 mt-2 font-bold">Role: Editor, Cinematography. Colorist</p>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card p-6 rounded-xl shadow-xl">
+          <h3 class="text-xl font-semibold mb-3 text-red-400">SCAM OF DREAMS | Short Film</h3>
+          <div class="thumbnail-container rounded-lg overflow-hidden mb-4">
+            <a href="https://youtu.be/HWvu4Nrfv9o" target="_blank" rel="noopener noreferrer">
+              <img src="assets/dreams.png" alt="SCAM OF DREAMS Thumbnail" />
+              <div class="play-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"
+                  stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-play">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </div>
+            </a>
+          </div>
+          <p class="text-sm text-gray-300">
+            A dramatic short exploring online financial scams and emotional impact through sharp cuts and sound design.
+          </p>
+          <p class="text-xs text-red-500 mt-2 font-bold">Role:Story Writing, Storytelling, Acting, Cinematography. Editor, Sound Mix & VO Integration</p>
+        </div>
+
+        <!-- Project 3 -->
+        <!-- Project Card 3: Narrative Short (New Project) -->
+<div class="project-card p-6 rounded-xl shadow-xl hover:scale-[1.02]">
+  <h3 class="text-xl font-semibold mb-3 text-red-400">
+    Short Film: 'After 10th'
+  </h3>
+
+  <div class="thumbnail-container rounded-lg overflow-hidden mb-4">
+    <a href="https://youtu.be/fkhcW7IayEc" target="_blank" rel="noopener noreferrer">
+      <img src="assets/After10th.png" alt="After 10th Short Film Thumbnail">
+      <div class="play-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
+      </div>
+    </a>
+  </div>
+
+  <p class="text-sm text-gray-300">
+    A relatable short film exploring the pressure and uncertainty students face when choosing their path after 10th grade. Demonstrated skills in managing multi-character dialogues and creating emotional resonance through deliberate pacing and music.
+  </p>
+
+  <p class="text-xs text-red-500 mt-2 font-bold">Role:Story Writing, Storytelling Editor, Acting, Cinematography.</p>
+</div>
+
+
+        
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="mb-24" data-animate>
+      <h2 class="text-4xl font-bold section-title mb-12">The Editor's Mindset</h2>
+      <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border-l-4 border-red-500">
+        <div class="md:flex md:space-x-8">
+          <div class="flex-shrink-0 mb-6 md:mb-0 w-32 h-32 mx-auto md:mx-0">
+            <img src="https://placehold.co/128x128/EF4444/000000?text=K.C" alt="Profile Picture"
+              class="rounded-full object-cover w-full h-full border-4 border-white" />
+          </div>
+          <div class="md:flex-grow">
+            <p class="text-xl font-semibold mb-4 text-red-400">My Philosophy: Every Frame Counts</p>
+            <p class="text-gray-300 leading-relaxed">
+              I specialize in finding the narrative truth within raw footage. Editing should be invisible yet
+              unforgettable — serving both rhythm and emotion for maximum audience impact.
+            </p>
+
+            <div class="mt-6">
+              <h4 class="text-red-500 font-bold mb-3">Related Creative Disciplines</h4>
+              <p class="text-gray-300 text-sm leading-relaxed">
+                My foundation in <b>Cinematography</b>, <b>Photography</b>, and <b>Acting</b> allows me to edit with
+                insight into performance, pacing, and visual storytelling.
+              </p>
+            </div>
+
+            <div class="mt-6">
+              <h4 class="text-red-500 font-bold mb-3">Core Toolset & Skills</h4>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">Adobe
+                  Premiere Pro</span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">DaVinci
+                  Resolve </span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">After
+                  Effects </span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">Sound
+                  Design & Mix</span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">Cinematic
+                  Pacing</span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">4K
+                  Workflow</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact" data-animate>
+      <h2 class="text-4xl font-bold section-title mb-12">Let's Collaborate</h2>
+      <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border-t-4 border-red-500 max-w-xl mx-auto">
+        <p class="text-lg text-gray-300 mb-6 text-center">
+          I’m currently accepting select projects. Reach out directly for rates and availability.
+        </p>
+        <div class="flex items-center space-x-4 p-3 bg-gray-700 rounded-lg justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="text-red-500">
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          <a href="mailto:kaushikpatil.work20@gmail.com"
+            class="text-white font-medium hover:text-red-400 transition">kaushikpatil.work20@gmail.com</a>
+        </div>
+        <p class="mt-8 text-center text-sm text-gray-400">
+          Resume coming soon — email for full credits & project history.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 py-6 mt-16 border-t border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-400">
+      &copy; 2025 Kaushik Cuts. Developed for impact.
+    </div>
+  </footer>
+
+  <!-- JS: Animate sections on scroll -->
+  <script>
+    const elements = document.querySelectorAll('[data-animate]');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    });
+    elements.forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
