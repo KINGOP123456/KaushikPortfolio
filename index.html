@@ -1,554 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>KAUSHIK.CUTS | Video Editor Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Data Privacy Awareness — Field Study Dashboard</title>
+<meta name="description" content="Field Study dashboard based on a survey of 67 college students about data privacy awareness.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
 
-  <style>
-    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-    :root{
-      --red:#e5242b;--red2:#ff3c44;
-      --glow:rgba(229,36,43,0.5);
-      --dim:rgba(229,36,43,0.12);
-      --black:#030303;--s1:#0d0d0d;--s2:#141414;
-      --border:rgba(255,255,255,0.06);
-      --text:#f0ede8;--muted:#6b6560;
-      --gold:#f5c842;
-    }
-    html{scroll-behavior:smooth}
-    body{font-family:'DM Sans',sans-serif;background:var(--black);color:var(--text);overflow-x:hidden;cursor:none}
+<style>
+:root {
+  --navy:#0b1f3a;
+  --blue:#1769e0;
+  --blue2:#4f8df7;
+  --sky:#eaf3ff;
+  --text:#172033;
+  --muted:#65748b;
+  --line:#e3ebf5;
+  --card:#ffffff;
+  --bg:#f7faff;
+  --shadow:0 18px 55px rgba(24,54,93,.09);
+  --radius:22px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.container{width:min(1180px,92%);margin:auto}
+header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(16px);border-bottom:1px solid rgba(227,235,245,.8)}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.brand{font-weight:800;color:var(--navy);letter-spacing:-.04em}
+.brand span{color:var(--blue)}
+nav{display:flex;gap:22px;font-size:13px;font-weight:600;color:#58677c}
+nav a{transition:.25s}
+nav a:hover{color:var(--blue)}
+.hero{padding:150px 0 85px;background:radial-gradient(circle at 85% 20%,#dcecff 0,transparent 34%),linear-gradient(135deg,#fff,#f2f7ff)}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
+h1{font-size:clamp(38px,6vw,70px);line-height:1.02;letter-spacing:-.06em;color:var(--navy);margin-bottom:22px}
+.hero p{font-size:17px;color:var(--muted);max-width:690px}
+.hero-card{background:#fff;border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero-card:before{content:"";position:absolute;width:170px;height:170px;border-radius:50%;right:-55px;top:-60px;background:#e7f1ff}
+.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;position:relative}
+.stat{padding:20px;border:1px solid var(--line);border-radius:18px;background:#fff}
+.stat .num{font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.04em}
+.stat .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+section{padding:92px 0}
+.section-head{margin-bottom:36px}
+.kicker{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;margin-bottom:8px}
+h2{font-size:clamp(30px,4vw,46px);line-height:1.1;letter-spacing:-.05em;color:var(--navy)}
+.section-head p{margin-top:12px;color:var(--muted);max-width:760px}
+.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.finding{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(24,54,93,.05);transition:transform .3s,box-shadow .3s}
+.finding:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
+.finding i{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:var(--sky);color:var(--blue);margin-bottom:16px}
+.finding .percent{font-size:34px;font-weight:800;color:var(--navy)}
+.finding p{font-size:13px;color:var(--muted)}
+.toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px;flex-wrap:wrap}
+.count{font-size:13px;color:var(--muted)}
+select{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;font:inherit;font-size:13px;color:var(--text);outline:none}
+.note{display:flex;gap:12px;align-items:flex-start;padding:15px 17px;background:#eef6ff;border:1px solid #d6e8ff;border-radius:15px;color:#52637a;font-size:12px;margin-bottom:26px}
+.note i{color:var(--blue);margin-top:3px}
+.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+.chart-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 10px 35px rgba(24,54,93,.055);transition:transform .35s,box-shadow .35s}
+.chart-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.chart-card.wide{grid-column:1/-1}
+.charts .chart-card{min-height:460px}
+.charts .chart-card:nth-child(1){border-top:4px solid #1769e0}
+.charts .chart-card:nth-child(2){border-top:4px solid #4f8df7}
+.charts .chart-card:nth-child(3){border-top:4px solid #6c63ff}
+.charts .chart-card:nth-child(4){border-top:4px solid #16a085}
+.meta{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}
+.qno,.total{font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--blue);text-transform:uppercase}
+.total{color:#8b98aa}
+.chart-title{font-size:16px;line-height:1.4;color:var(--navy);margin-bottom:15px}
+.chart-box{height:310px;position:relative}
+.chart-card.wide .chart-box{height:390px}
+.pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
+.pill{background:#f4f7fb;border:1px solid #e8eef6;border-radius:999px;padding:5px 9px;font-size:10px;color:#637187}
+.pill b{color:var(--navy)}
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.info-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 10px 35px rgba(24,54,93,.05)}
+.info-card h3{color:var(--navy);margin-bottom:9px}
+.info-card p,.info-card li{font-size:13px;color:var(--muted)}
+.info-card ul{padding-left:18px}
+.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.photo{aspect-ratio:4/3;border:2px dashed #cbd9ea;border-radius:20px;background:#fff;display:grid;place-items:center;text-align:center;padding:25px;color:#8090a5}
+.photo i{font-size:30px;color:#9bb4d2;margin-bottom:8px}
+/* GOOGLE FORM BUTTON */
+.form-button-wrap{margin-top:22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.form-button{position:relative;display:inline-flex;align-items:center;gap:12px;padding:14px 20px;border-radius:15px;color:#fff;font-size:13px;font-weight:800;overflow:hidden;background:linear-gradient(135deg,#1769e0,#6c63ff);box-shadow:0 12px 30px rgba(23,105,224,.22);transition:.3s}.form-button:before{content:"";position:absolute;inset:-80% 35% auto -20%;height:180%;background:rgba(255,255,255,.2);transform:rotate(25deg);transition:.5s}.form-button:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(23,105,224,.3)}.form-button:hover:before{transform:translateX(190%) rotate(25deg)}.form-button .form-icon{position:relative;width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.18)}.form-button .form-copy{position:relative;display:flex;flex-direction:column;line-height:1.15}.form-button .form-copy small{margin-top:4px;font-size:9px;font-weight:600;opacity:.82}.form-button .arrow{position:relative;margin-left:4px;transition:.3s}.form-button:hover .arrow{transform:translateX(4px)}.form-note{font-size:11px;color:#7a889c}
+/* FIELD STUDY SLIDESHOW */
+.slideshow-wrap{position:relative;width:min(420px,92vw);margin:0 auto}.slideshow{position:relative;width:100%;aspect-ratio:9/16;height:auto;min-height:0;background:#0b1f3a;border:1px solid rgba(255,255,255,.7);border-radius:28px;overflow:hidden;box-shadow:0 25px 70px rgba(24,54,93,.18)}.slideshow:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 15%,rgba(79,141,247,.18),transparent 30%),radial-gradient(circle at 80% 85%,rgba(108,99,255,.16),transparent 30%);pointer-events:none;z-index:1}.photo-slide{position:absolute;inset:0;display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .65s ease,visibility .65s ease;z-index:2}.photo-slide.active{opacity:1;visibility:visible}.photo-slide img{width:100%;height:100%;object-fit:contain;display:block;position:relative;z-index:1}.slide-number{position:absolute;top:18px;right:18px;z-index:4;padding:8px 12px;border-radius:999px;background:rgba(11,31,58,.72);color:#fff;border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(10px);font-size:10px;font-weight:800;letter-spacing:.12em}.slide-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border:1px solid rgba(255,255,255,.25);border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(11,31,58,.62);backdrop-filter:blur(10px);cursor:pointer;transition:.3s}.slide-arrow:hover{background:rgba(23,105,224,.88);transform:translateY(-50%) scale(1.08)}.slide-arrow.prev{left:18px}.slide-arrow.next{right:18px}.slide-dots{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:5;display:flex;gap:8px;padding:9px 12px;border-radius:999px;background:rgba(11,31,58,.62);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px)}.slide-dot{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.42);cursor:pointer;transition:.3s}.slide-dot.active{width:25px;border-radius:999px;background:#fff}.slideshow-caption{display:flex;justify-content:space-between;gap:15px;margin-top:14px;padding:0 5px;color:#718096;font-size:11px;font-weight:600}.slideshow-caption span{display:flex;align-items:center;gap:7px}.slideshow-caption i{color:var(--blue)}
 
-    /* LOADER */
-    #loader{
-      position:fixed;inset:0;z-index:10000;background:var(--black);
-      display:flex;align-items:center;justify-content:center;flex-direction:column;gap:2rem;
-      transition:opacity .7s ease,visibility .7s;
-    }
-    #loader.hidden{opacity:0;visibility:hidden;pointer-events:none}
-    .loader-logo{font-family:'Bebas Neue',sans-serif;font-size:4rem;letter-spacing:.1em;overflow:hidden}
-    .loader-logo span{display:inline-block;color:var(--red);animation:lDrop .6s cubic-bezier(.16,1,.3,1) both}
-    .loader-logo span:nth-child(1){animation-delay:.05s}.loader-logo span:nth-child(2){animation-delay:.1s}
-    .loader-logo span:nth-child(3){animation-delay:.15s}.loader-logo span:nth-child(4){animation-delay:.2s}
-    .loader-logo span:nth-child(5){animation-delay:.25s}.loader-logo span:nth-child(6){animation-delay:.3s}
-    .loader-logo span:nth-child(7){animation-delay:.35s}.loader-logo span:nth-child(8){animation-delay:.4s}
-    .loader-logo span:nth-child(9){animation-delay:.45s}.loader-logo span:nth-child(10){animation-delay:.5s}
-    .loader-logo span:nth-child(11){animation-delay:.55s}.loader-logo span:nth-child(12){animation-delay:.6s}
-    @keyframes lDrop{from{opacity:0;transform:translateY(-60px)}to{opacity:1;transform:none}}
-    .loader-bar{width:180px;height:1px;background:var(--border);position:relative;overflow:hidden}
-    .loader-bar::after{
-      content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-      background:linear-gradient(90deg,transparent,var(--red),transparent);
-      animation:lSweep 1s ease infinite;
-    }
-    @keyframes lSweep{to{left:200%}}
-    .loader-pct{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.3em;color:var(--muted)}
-
-    /* CURSOR */
-    #cdot{width:6px;height:6px;border-radius:50%;background:var(--red);position:fixed;top:0;left:0;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .15s,height .15s,background .15s}
-    #cring{width:40px;height:40px;border-radius:50%;border:1px solid var(--red);position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);opacity:.5;transition:width .3s,height .3s,border-color .3s}
-    #ctxt{position:fixed;top:0;left:0;pointer-events:none;z-index:9997;font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;transform:translate(-50%,-50%);opacity:0;transition:opacity .2s;white-space:nowrap}
-    body.hpl #cdot{width:0;height:0}
-    body.hpl #cring{width:80px;height:80px;border-color:var(--gold);opacity:.8}
-    body.hpl #ctxt{opacity:1;margin-top:50px}
-    body.hlk #cdot{background:var(--gold);width:10px;height:10px}
-    body.hlk #cring{width:56px;height:56px;border-color:var(--gold)}
-
-    /* CANVAS */
-    #cvs{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.3}
-
-    /* NOISE */
-    .noise{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:.035;
-      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 300 300' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");mix-blend-mode:overlay}
-
-    /* HEADER */
-    header{position:fixed;top:0;left:0;right:0;z-index:500;padding:1.3rem 2.5rem;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid transparent;transition:border-color .4s,background .4s,backdrop-filter .4s}
-    header.sc{background:rgba(3,3,3,.92);backdrop-filter:blur(20px);border-color:var(--border)}
-    .logo{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.1em;position:relative;z-index:1}
-    .logo .cut{color:var(--red);position:relative}
-    .logo .cut::after{content:'';position:absolute;bottom:-2px;left:0;right:0;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .4s cubic-bezier(.16,1,.3,1)}
-    .logo:hover .cut::after{transform:scaleX(1)}
-    nav{display:flex;gap:2.5rem;align-items:center}
-    nav a{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color .2s;position:relative}
-    nav a::before{content:attr(data-text);position:absolute;top:0;left:0;color:var(--red);clip-path:inset(0 100% 0 0);transition:clip-path .4s cubic-bezier(.16,1,.3,1)}
-    nav a:hover{color:transparent}
-    nav a:hover::before{clip-path:inset(0 0% 0 0)}
-    .nav-hire{font-family:'Space Mono',monospace;font-size:.63rem;letter-spacing:.18em;text-transform:uppercase;color:#fff;background:var(--red);padding:.6rem 1.4rem;border-radius:2px;text-decoration:none;position:relative;overflow:hidden;transition:transform .2s,box-shadow .2s}
-    .nav-hire::before{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.2),transparent);transform:translateX(-100%);transition:transform .5s}
-    .nav-hire:hover::before{transform:translateX(100%)}
-    .nav-hire:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--glow)}
-
-    /* HERO */
-    .hero{min-height:100vh;display:grid;place-items:center;text-align:center;padding:8rem 2rem 5rem;position:relative;z-index:2}
-    .spotlight{position:absolute;inset:0;pointer-events:none;background:radial-gradient(600px circle at 50% 50%,rgba(229,36,43,.07),transparent 70%)}
-    .hero-strip{position:absolute;top:0;left:0;right:0;height:5px;background:repeating-linear-gradient(90deg,var(--red) 0,var(--red) 18px,transparent 18px,transparent 28px);opacity:.6}
-    .cnr{position:absolute;width:30px;height:30px;opacity:.35}
-    .cnr-tl{top:10%;left:5%;border-top:1px solid var(--red);border-left:1px solid var(--red)}
-    .cnr-tr{top:10%;right:5%;border-top:1px solid var(--red);border-right:1px solid var(--red)}
-    .cnr-bl{bottom:18%;left:5%;border-bottom:1px solid var(--red);border-left:1px solid var(--red)}
-    .cnr-br{bottom:18%;right:5%;border-bottom:1px solid var(--red);border-right:1px solid var(--red)}
-
-    .hero-eye{font-family:'Space Mono',monospace;font-size:.65rem;letter-spacing:.35em;text-transform:uppercase;color:var(--red);margin-bottom:1.5rem;opacity:0;animation:rUp .8s .6s forwards}
-    .gtitle{position:relative;font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,17vw,16rem);line-height:.86;letter-spacing:-.01em;opacity:0;animation:rUp .9s .8s forwards}
-    .gtitle .l2{color:var(--red)}
-    .glitch{position:relative;display:inline-block}
-    .glitch::before,.glitch::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%}
-    .glitch::before{color:var(--red);clip-path:polygon(0 0,100% 0,100% 35%,0 35%);transform:translate(-2px,0);animation:gA 4s infinite linear}
-    .glitch::after{color:#0ff;clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);transform:translate(2px,0);animation:gB 4s infinite linear;opacity:.35}
-    @keyframes gA{0%,90%,100%{transform:translate(-2px,0);opacity:0}91%{transform:translate(-6px,2px);opacity:1}92%{transform:translate(4px,-2px);opacity:.8}93%{transform:translate(-2px,0);opacity:0}}
-    @keyframes gB{0%,90%,100%{transform:translate(2px,0);opacity:0}91%{transform:translate(6px,-2px);opacity:1}92%{transform:translate(-4px,2px);opacity:.8}93%{transform:translate(2px,0);opacity:0}}
-
-    .hero-sub{margin-top:1.8rem;font-size:1rem;color:var(--muted);max-width:480px;line-height:1.7;font-weight:300;opacity:0;animation:rUp .9s 1s forwards}
-    .hero-sub strong{color:var(--text);font-weight:500}
-    .hero-btns{margin-top:2.5rem;display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;opacity:0;animation:rUp .9s 1.2s forwards}
-
-    .btn-p{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;background:var(--red);color:#fff;padding:1rem 2.2rem;border-radius:2px;text-decoration:none;position:relative;overflow:hidden;transition:transform .2s,box-shadow .3s}
-    .btn-p::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent,rgba(255,255,255,.18),transparent);transform:translateX(-100%);transition:transform .5s}
-    .btn-p:hover::after{transform:translateX(100%)}
-    .btn-p:hover{transform:translateY(-3px);box-shadow:0 16px 50px var(--glow)}
-    .btn-o{font-family:'Space Mono',monospace;font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;background:transparent;color:var(--text);padding:1rem 2.2rem;border-radius:2px;border:1px solid var(--border);text-decoration:none;transition:all .3s}
-    .btn-o:hover{border-color:var(--red);color:var(--red);transform:translateY(-3px)}
-
-    .scroll-cue{position:absolute;bottom:2.5rem;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:.5rem;opacity:0;animation:rUp 1s 1.5s forwards}
-    .scroll-cue span{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--muted)}
-    .scroll-line{width:1px;height:55px;background:linear-gradient(to bottom,var(--red),transparent);animation:sPulse 2s ease-in-out infinite}
-    @keyframes sPulse{0%,100%{transform:scaleY(.4);transform-origin:top;opacity:.4}50%{transform:scaleY(1);transform-origin:top;opacity:1}}
-
-    /* MARQUEE */
-    .mqw{overflow:hidden;border-top:1px solid var(--border);border-bottom:1px solid var(--border);background:var(--s1);padding:.9rem 0;position:relative;z-index:2}
-    .mqt{display:flex;animation:mqScroll 22s linear infinite;white-space:nowrap}
-    .mqi{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.08em;color:var(--muted);padding:0 2rem;display:flex;align-items:center;gap:1.5rem;flex-shrink:0}
-    .mqd{width:5px;height:5px;border-radius:50%;background:var(--red);flex-shrink:0}
-    @keyframes mqScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-    /* STATS */
-    .stats{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin:4rem auto;max-width:1200px;position:relative;z-index:2;padding:0 2rem}
-    .stat{padding:2.5rem 1.5rem;text-align:center;border-right:1px solid var(--border);background:var(--s1);position:relative;overflow:hidden;transition:background .3s}
-    .stat::before{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:var(--dim);transition:height .4s cubic-bezier(.16,1,.3,1)}
-    .stat:hover::before{height:100%}
-    .stat:last-child{border-right:none}
-    .snum{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;color:var(--red);display:block;line-height:1;position:relative;z-index:1}
-    .slbl{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:.4rem;display:block;position:relative;z-index:1}
-
-    /* SECTIONS */
-    .wrap{padding:5rem 2rem;max-width:1280px;margin:0 auto;position:relative;z-index:2}
-    .slabel{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.35em;text-transform:uppercase;color:var(--red);margin-bottom:.8rem;display:flex;align-items:center;gap:.7rem}
-    .slabel::before{content:'';display:inline-block;width:22px;height:1px;background:var(--red)}
-    .stitle{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,6vw,5.5rem);line-height:.92;letter-spacing:.02em;margin-bottom:3rem}
-    .stitle .r{color:var(--red)}
-
-    /* REEL */
-    .reel-box{position:relative;border-radius:4px;overflow:hidden;border:1px solid var(--border);transition:border-color .4s}
-    .reel-box:hover{border-color:rgba(229,36,43,.5)}
-    .reel-box::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(229,36,43,.06),transparent 50%);opacity:0;transition:opacity .4s;pointer-events:none}
-    .reel-box:hover::after{opacity:1}
-    .reel-img{width:100%;display:block;aspect-ratio:16/9;object-fit:cover;filter:brightness(.8) saturate(.9);transition:transform .6s ease,filter .4s}
-    .reel-box:hover .reel-img{transform:scale(1.03);filter:brightness(.55) saturate(.7)}
-    .reel-ov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;text-decoration:none}
-    .reel-btn{width:90px;height:90px;border-radius:50%;border:2px solid rgba(255,255,255,.7);display:flex;align-items:center;justify-content:center;background:rgba(229,36,43,.25);backdrop-filter:blur(6px);transition:all .35s cubic-bezier(.16,1,.3,1);position:relative}
-    .reel-btn::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:1px solid rgba(229,36,43,.3);animation:rSpin 3s linear infinite}
-    @keyframes rSpin{to{transform:rotate(360deg)}}
-    .reel-box:hover .reel-btn{background:var(--red);border-color:var(--red);transform:scale(1.15);box-shadow:0 0 60px var(--glow)}
-    .reel-lbl{font-family:'Space Mono',monospace;font-size:.62rem;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.6);transition:color .3s}
-    .reel-box:hover .reel-lbl{color:#fff}
-
-    /* PROJECTS */
-    .pgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
-    .pcard{background:var(--s1);overflow:hidden;text-decoration:none;color:inherit;display:flex;flex-direction:column;transition:transform .4s cubic-bezier(.16,1,.3,1)}
-    .pthumb{aspect-ratio:16/9;overflow:hidden;background:#000;position:relative}
-    .pthumb img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(.7) saturate(.75);transition:transform .7s ease,filter .4s}
-    .pcard:hover .pthumb img{transform:scale(1.08);filter:brightness(.4) saturate(.5)}
-    .pplay{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%) scale(.6);width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(255,255,255,.7);background:rgba(229,36,43,.3);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;opacity:0;transition:all .35s cubic-bezier(.16,1,.3,1)}
-    .pcard:hover .pplay{opacity:1;transform:translate(-50%,-50%) scale(1)}
-    .pov{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,transparent 60%)}
-    .pinfo{padding:1.5rem 1.6rem;flex:1;border-top:1px solid var(--border);position:relative}
-    .pline{position:absolute;top:0;left:0;height:2px;width:0;background:var(--red);transition:width .5s cubic-bezier(.16,1,.3,1)}
-    .pcard:hover .pline{width:100%}
-    .pnum{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.2em;color:var(--red);margin-bottom:.4rem}
-    .pname{font-family:'Bebas Neue',sans-serif;font-size:1.45rem;letter-spacing:.04em;margin-bottom:.5rem}
-    .pdesc{font-size:.8rem;color:var(--muted);line-height:1.6;margin-bottom:.9rem}
-    .ptags{display:flex;flex-wrap:wrap;gap:.35rem}
-    .tag{font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.1em;text-transform:uppercase;color:var(--red);border:1px solid rgba(229,36,43,.25);padding:.22rem .55rem;border-radius:2px;background:var(--dim)}
-
-    /* ABOUT */
-    .agrid{display:grid;grid-template-columns:1fr 1.7fr;gap:7rem;align-items:start}
-    .prwrap{position:sticky;top:7rem}
-    .prouter{position:relative;width:100%;aspect-ratio:.8;border-radius:4px;overflow:hidden;background:var(--s2)}
-    .prouter::before{content:'';position:absolute;inset:0;z-index:2;background:linear-gradient(to top,rgba(229,36,43,.2) 0%,transparent 50%)}
-    .scanl{position:absolute;top:-2px;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,rgba(229,36,43,.8),transparent);z-index:3;animation:scanD 3s ease-in-out infinite}
-    @keyframes scanD{0%{top:-2px;opacity:0}10%{opacity:1}90%{opacity:1}100%{top:100%;opacity:0}}
-    .primg{width:100%;height:100%;object-fit:cover;filter:grayscale(.3) contrast(1.1);display:block}
-    .prph{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:6rem;color:rgba(229,36,43,.3);letter-spacing:.1em}
-    .prbadge{position:absolute;bottom:1.4rem;right:1.4rem;z-index:4;background:var(--red);color:#fff;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.15em;text-transform:uppercase;padding:.45rem .9rem;border-radius:2px}
-    .br{position:absolute;width:24px;height:24px;z-index:4;transition:all .4s cubic-bezier(.16,1,.3,1);opacity:.5}
-    .br-tl{top:12px;left:12px;border-top:1.5px solid var(--red);border-left:1.5px solid var(--red)}
-    .br-tr{top:12px;right:12px;border-top:1.5px solid var(--red);border-right:1.5px solid var(--red)}
-    .br-bl{bottom:60px;left:12px;border-bottom:1.5px solid var(--red);border-left:1.5px solid var(--red)}
-    .br-br{bottom:60px;right:12px;border-bottom:1.5px solid var(--red);border-right:1.5px solid var(--red)}
-    .prwrap:hover .br{opacity:1;width:32px;height:32px}
-    .prwrap:hover .br-tl{top:8px;left:8px}.prwrap:hover .br-tr{top:8px;right:8px}
-    .prwrap:hover .br-bl{bottom:56px;left:8px}.prwrap:hover .br-br{bottom:56px;right:8px}
-
-    .philo{font-family:'Bebas Neue',sans-serif;font-size:2.6rem;line-height:1.05;letter-spacing:.02em;border-left:3px solid var(--red);padding-left:1.4rem;margin-bottom:2.5rem}
-    .abody{font-size:.92rem;color:var(--muted);line-height:1.85;margin-bottom:2.5rem}
-    .abody strong{color:var(--text);font-weight:500}
-    .chips{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2.5rem}
-    .chip{font-family:'Space Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:.45rem 1rem;border:1px solid var(--border);border-radius:2px;color:var(--muted);transition:all .25s}
-    .chip:hover{border-color:var(--red);color:var(--red);background:var(--dim)}
-    .tlbl{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.25em;text-transform:uppercase;color:var(--red);margin-bottom:.8rem}
-    .tgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:4px;overflow:hidden}
-    .tcell{background:var(--s1);padding:1.1rem .9rem;text-align:center;transition:background .25s;position:relative;overflow:hidden}
-    .tcell::after{content:'';position:absolute;bottom:0;left:0;right:0;height:0;background:var(--dim);transition:height .3s}
-    .tcell:hover::after{height:100%}
-    .tname{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.09em;color:var(--text);display:block;position:relative;z-index:1}
-
-    /* CONTACT */
-    .ccard{background:var(--s1);border:1px solid var(--border);border-radius:4px;padding:2.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;position:relative;overflow:hidden;transition:border-color .4s}
-    .ccard::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,var(--dim),transparent 60%);opacity:0;transition:opacity .4s}
-    .ccard:hover{border-color:rgba(229,36,43,.4)}
-    .ccard:hover::before{opacity:1}
-    .ccorner{position:absolute;bottom:0;right:0;width:0;height:0;border-style:solid;border-width:0 0 60px 60px;border-color:transparent transparent var(--red) transparent;opacity:.12;transition:opacity .3s}
-    .ccard:hover .ccorner{opacity:.25}
-    .elink{font-family:'Bebas Neue',sans-serif;font-size:1.7rem;letter-spacing:.04em;color:var(--text);text-decoration:none;transition:color .2s;position:relative}
-    .elink::after{content:'';position:absolute;bottom:-3px;left:0;width:0;height:1px;background:var(--red);transition:width .4s cubic-bezier(.16,1,.3,1)}
-    .elink:hover{color:var(--red)}.elink:hover::after{width:100%}
-    .avail{display:flex;align-items:center;gap:.5rem;font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:#4ade80}
-    .adot{width:7px;height:7px;border-radius:50%;background:#4ade80;animation:pG 1.5s ease-in-out infinite}
-    @keyframes pG{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
-
-    /* FOOTER */
-    footer{border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;background:var(--s1);position:relative;z-index:2}
-    .flogo{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:.08em}
-    .flogo span{color:var(--red)}
-    .fcopy{font-family:'Space Mono',monospace;font-size:.58rem;letter-spacing:.12em;color:var(--muted)}
-
-    /* REVEAL */
-    [data-r]{opacity:0;transform:translateY(45px);transition:opacity .9s cubic-bezier(.16,1,.3,1),transform .9s cubic-bezier(.16,1,.3,1)}
-    [data-r].on{opacity:1;transform:none}
-    [data-rd="1"]{transition-delay:.1s}[data-rd="2"]{transition-delay:.2s}
-    [data-rd="3"]{transition-delay:.3s}[data-rd="4"]{transition-delay:.4s}[data-rd="5"]{transition-delay:.5s}
-
-    @keyframes rUp{from{opacity:0;transform:translateY(35px)}to{opacity:1;transform:none}}
-
-    @media(max-width:900px){
-      body{cursor:auto}
-      #cdot,#cring,#ctxt{display:none}
-      header{padding:1.1rem 1.3rem}
-      nav{display:none}
-      .pgrid{grid-template-columns:1fr}
-      .agrid{grid-template-columns:1fr;gap:3rem}
-      .prwrap{position:static}
-      .stats{grid-template-columns:1fr 1fr;padding:0 1rem}
-      .stat{border-right:none;border-bottom:1px solid var(--border)}
-      .tgrid{grid-template-columns:1fr 1fr}
-      .ccard{flex-direction:column;text-align:center}
-      footer{flex-direction:column;text-align:center}
-    }
-  </style>
+footer{padding:35px 0;background:var(--navy);color:#c8d5e8;font-size:12px}
+footer strong{color:#fff}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:none}
+@media(max-width:900px){
+  nav{display:none}
+  .hero-grid,.about-grid{grid-template-columns:1fr}
+  .findings{grid-template-columns:repeat(2,1fr)}
+  .charts{grid-template-columns:1fr}
+  .chart-card.wide{grid-column:auto}
+}
+@media(max-width:600px){
+  section{padding:70px 0}
+  .hero{padding-top:120px}
+  .findings,.photos{grid-template-columns:1fr}
+  .stat-grid{grid-template-columns:1fr 1fr}
+  .chart-box,.chart-card.wide .chart-box{height:280px}
+  .slideshow-wrap{width:min(94vw,380px)}.slideshow{width:100%;aspect-ratio:9/16;height:auto;min-height:0;border-radius:20px}.slide-arrow{width:38px;height:38px}.slide-arrow.prev{left:10px}.slide-arrow.next{right:10px}.slide-number{top:12px;right:12px}.slideshow-caption{font-size:10px}
+}
+</style>
 </head>
+
 <body>
-
-<!-- LOADER -->
-<div id="loader">
-  <div class="loader-logo">
-    <span>K</span><span>A</span><span>U</span><span>S</span><span>H</span><span>I</span><span>K</span>
-    <span style="color:var(--text)">.</span>
-    <span>C</span><span>U</span><span>T</span><span>S</span>
+<header>
+  <div class="container nav">
+    <a class="brand" href="#home">DATA<span>PRIVACY</span> · FIELD STUDY</a>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#about">About</a>
+      <a href="#findings">Findings</a>
+      <a href="#survey">Survey Results</a>
+      <a href="#field-study">Field Study</a>
+    </nav>
   </div>
-  <div class="loader-bar"></div>
-  <div class="loader-pct" id="lpct">0%</div>
-</div>
-
-<!-- CURSOR -->
-<div id="cdot"></div>
-<div id="cring"></div>
-<div id="ctxt">PLAY</div>
-
-<!-- CANVAS -->
-<canvas id="cvs"></canvas>
-<div class="noise"></div>
-
-<!-- HEADER -->
-<header id="hdr">
-  <div class="logo">KAUSHIK<span class="cut">.CUTS</span></div>
-  <nav>
-    <a href="#work" data-text="Work">Work</a>
-    <a href="#about" data-text="About">About</a>
-    <a href="#contact" class="nav-hire">Hire Me</a>
-  </nav>
 </header>
 
-<!-- HERO -->
+<main>
 <section class="hero" id="home">
-  <div class="spotlight" id="spl"></div>
-  <div class="hero-strip"></div>
-  <div class="cnr cnr-tl"></div><div class="cnr cnr-tr"></div>
-  <div class="cnr cnr-bl"></div><div class="cnr cnr-br"></div>
-  <div style="position:relative;z-index:2">
-    <p class="hero-eye">Mumbai · Video Editor · Cinematographer</p>
-    <h1 class="gtitle">
-      <span class="glitch" data-text="KAUSHIK">KAUSHIK</span>
-      <span class="l2 glitch" data-text=".CUTS">.CUTS</span>
-    </h1>
-    <p class="hero-sub">Bridging <strong>Cinematography, Acting &amp; Post-Production</strong> to craft visual stories that move people.</p>
-    <div class="hero-btns">
-      <a href="#work" class="btn-p">View My Work</a>
-      <a href="#contact" class="btn-o">Get in Touch</a>
+  <div class="container hero-grid">
+    <div class="reveal">
+      <div class="eyebrow"><i class="fa-solid fa-shield-halved"></i> College Field Study</div>
+      <h1>Awareness of Data Privacy Among College Students</h1>
+      <p>
+        An interactive presentation of the responses collected through our
+        college survey, showing awareness, online habits, privacy practices,
+        and student experiences through clear visualizations.
+      </p>
+    </div>
+    <div class="hero-card reveal">
+      <div class="stat-grid">
+        <div class="stat"><div class="num">67</div><div class="label">Respondents</div></div>
+        <div class="stat"><div class="num">30</div><div class="label">Questions</div></div>
+        <div class="stat"><div class="num">100%</div><div class="label">Survey Data</div></div>
+        <div class="stat"><div class="num">Live</div><div class="label">Interactive Charts</div></div>
+      </div>
     </div>
   </div>
-  <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
 </section>
 
-<!-- MARQUEE -->
-<div class="mqw">
-  <div class="mqt">
-    <span class="mqi"><span class="mqd"></span>Video Editing</span>
-    <span class="mqi"><span class="mqd"></span>Color Grading</span>
-    <span class="mqi"><span class="mqd"></span>Sound Design</span>
-    <span class="mqi"><span class="mqd"></span>Cinematography</span>
-    <span class="mqi"><span class="mqd"></span>Short Films</span>
-    <span class="mqi"><span class="mqd"></span>Commercial Ads</span>
-    <span class="mqi"><span class="mqd"></span>Post Production</span>
-    <span class="mqi"><span class="mqd"></span>DaVinci Resolve</span>
-    <span class="mqi"><span class="mqd"></span>Adobe Premiere</span>
-    <span class="mqi"><span class="mqd"></span>After Effects</span>
-    <span class="mqi"><span class="mqd"></span>Video Editing</span>
-    <span class="mqi"><span class="mqd"></span>Color Grading</span>
-    <span class="mqi"><span class="mqd"></span>Sound Design</span>
-    <span class="mqi"><span class="mqd"></span>Cinematography</span>
-    <span class="mqi"><span class="mqd"></span>Short Films</span>
-    <span class="mqi"><span class="mqd"></span>Commercial Ads</span>
-    <span class="mqi"><span class="mqd"></span>Post Production</span>
-    <span class="mqi"><span class="mqd"></span>DaVinci Resolve</span>
-    <span class="mqi"><span class="mqd"></span>Adobe Premiere</span>
-    <span class="mqi"><span class="mqd"></span>After Effects</span>
-  </div>
-</div>
-
-<!-- STATS -->
-<div class="stats">
-  <div class="stat" data-r><span class="snum" data-target="3">0</span><span class="slbl">Years Editing</span></div>
-  <div class="stat" data-r data-rd="1"><span class="snum" data-target="10">0</span><span class="slbl">Projects Done</span></div>
-  <div class="stat" data-r data-rd="2"><span class="snum" data-target="6">0</span><span class="slbl">Core Tools</span></div>
-  <div class="stat" data-r data-rd="3"><span class="snum" data-target="100">0</span><span class="slbl">Frames of Passion</span></div>
-</div>
-
-<!-- REEL -->
-<div class="wrap" id="reel">
-  <p class="slabel" data-r>Featured Reel</p>
-  <h2 class="stitle" data-r data-rd="1">Watch Me<br><span class="r">Work.</span></h2>
-  <div class="reel-box" data-r data-rd="2">
-    <img class="reel-img" src="assets/PP.png" alt="Showreel"
-      onerror="this.style.display='none';this.parentElement.style.minHeight='380px';this.parentElement.style.background='#111'">
-    <a href="https://youtube.com/@kvines01?si=qoMFzL67mBivPLcy" target="_blank" rel="noopener" class="reel-ov">
-      <div class="reel-btn">
-        <svg width="26" height="26" viewBox="0 0 24 24" fill="white"><polygon points="6 3 20 12 6 21 6 3"/></svg>
-      </div>
-      <span class="reel-lbl">YOUTUBE</span>
-    </a>
-  </div>
-</div>
-
-<!-- WORK -->
-<div class="wrap" id="work">
-  <p class="slabel" data-r>Selected Work</p>
-  <h2 class="stitle" data-r data-rd="1">Featured<br><span class="r">Projects.</span></h2>
-  <div class="pgrid" data-r data-rd="2">
-    <a class="pcard" href="https://youtu.be/6emTX_HF0dk" target="_blank" rel="noopener">
-      <div class="pthumb">
-        <img src="assets/colorg.jpg" alt="Velocity Sneaker" onerror="this.style.opacity='0'">
-        <div class="pov"></div>
-        <div class="pplay"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-      </div>
-      <div class="pinfo">
-        <div class="pline"></div>
-        <p class="pnum">01 · Reel</p>
-        <h3 class="pname">Color Grading</h3>
-        <p class="pdesc">High-energy product spot — dynamic cuts, cinematic grade, punchy sound design.</p>
-        <div class="ptags"><span class="tag">Editor</span><span class="tag">Cinematography</span><span class="tag">Colorist</span></div>
-      </div>
-    </a>
-    <a class="pcard" href="https://youtu.be/HWvu4Nrfv9o" target="_blank" rel="noopener">
-      <div class="pthumb">
-        <img src="assets/dreams.png" alt="Scam of Dreams" onerror="this.style.opacity='0'">
-        <div class="pov"></div>
-        <div class="pplay"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-      </div>
-      <div class="pinfo">
-        <div class="pline"></div>
-        <p class="pnum">02 · Short Film</p>
-        <h3 class="pname">Scam of Dreams</h3>
-        <p class="pdesc">Dramatic short on financial fraud — sharp cuts, tension-building sound design.</p>
-        <div class="ptags"><span class="tag">Writing</span><span class="tag">Acting</span><span class="tag">Editor</span><span class="tag">Sound</span></div>
-      </div>
-    </a>
-    <a class="pcard" href="https://youtu.be/fkhcW7IayEc" target="_blank" rel="noopener">
-      <div class="pthumb">
-        <img src="assets/After10th.png" alt="After 10th" onerror="this.style.opacity='0'">
-        <div class="pov"></div>
-        <div class="pplay"><svg width="18" height="18" viewBox="0 0 24 24" fill="white"><polygon points="6 3 20 12 6 21 6 3"/></svg></div>
-      </div>
-      <div class="pinfo">
-        <div class="pline"></div>
-        <p class="pnum">03 · Short Film</p>
-        <h3 class="pname">After 10th</h3>
-        <p class="pdesc">Student drama on post-10th pressure — emotional pacing, multi-character dialogue.</p>
-        <div class="ptags"><span class="tag">Writing</span><span class="tag">Acting</span><span class="tag">Cinematography</span></div>
-      </div>
-    </a>
-  </div>
-</div>
-
-<!-- ABOUT -->
-<div class="wrap" id="about">
-  <div class="agrid">
-    <div class="prwrap" data-r>
-      <div class="prouter">
-        <div class="scanl"></div>
-        <div class="br br-tl"></div><div class="br br-tr"></div>
-        <div class="br br-bl"></div><div class="br br-br"></div>
-        <img class="primg" src="assets/PP.png" alt="Kaushik"
-          onerror="this.style.display='none';document.querySelector('.prph').style.display='flex'">
-        <div class="prph" style="display:none">K.C</div>
-        <div class="prbadge">Open to Work</div>
-      </div>
+<section id="about">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">01 / About</div>
+      <h2>What this study explores</h2>
+      <p>The survey focuses on how college students understand and manage personal data, passwords, permissions, phishing, social-media privacy and other digital-safety practices.</p>
     </div>
-    <div>
-      <p class="slabel" data-r>The Person</p>
-      <div class="philo" data-r data-rd="1">Every<br>Frame<br>Counts.</div>
-      <p class="abody" data-r data-rd="2">I specialize in finding the <strong>narrative truth within raw footage</strong>. Editing should be invisible yet unforgettable — serving both rhythm and emotion for maximum audience impact.<br><br>My foundation in <strong>Cinematography, Photography, and Acting</strong> lets me edit with deep insight into performance, pacing, and visual storytelling.</p>
-      <div data-r data-rd="3">
-        <p class="tlbl">Creative Disciplines</p>
-        <div class="chips">
-          <span class="chip">Cinematography</span><span class="chip">Photography</span><span class="chip">Acting</span>
-          <span class="chip">Sound Design</span><span class="chip">Color Grading</span><span class="chip">Story Writing</span>
-        </div>
+    <div class="about-grid">
+      <div class="info-card reveal">
+        <h3><i class="fa-solid fa-bullseye"></i> Objective</h3>
+        <p>To understand the level of data-privacy awareness among college students and identify common online privacy and security practices.</p>
       </div>
-      <div data-r data-rd="4">
-        <p class="tlbl">Core Toolset</p>
-        <div class="tgrid">
-          <div class="tcell"><span class="tname">Premiere Pro</span></div>
-          <div class="tcell"><span class="tname">DaVinci Resolve</span></div>
-          <div class="tcell"><span class="tname">After Effects</span></div>
-          <div class="tcell"><span class="tname">Sound Design</span></div>
-          <div class="tcell"><span class="tname">Cine Pacing</span></div>
-          <div class="tcell"><span class="tname">4K Workflow</span></div>
-        </div>
+      <div class="info-card reveal">
+        <h3><i class="fa-solid fa-clipboard-list"></i> Methodology</h3>
+        <p>Primary data was collected using a Google Form survey. The charts below are generated directly from the submitted response spreadsheet.</p>
+        <div class="form-button-wrap"><a class="form-button" href="https://docs.google.com/forms/d/1YmJfmB4PHAbBXRcp3cJ6UdywWYF5SSaPAco90Fru8pk/viewform?edit_requested=true" target="_blank" rel="noopener noreferrer"><span class="form-icon"><i class="fa-solid fa-file-signature"></i></span><span class="form-copy">Open Google Form<small>View the original survey questionnaire</small></span><i class="fa-solid fa-arrow-up-right-from-square arrow"></i></a><span class="form-note">Opens in a new tab ↗</span></div>
       </div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- CONTACT -->
-<div class="wrap" id="contact" style="padding-bottom:7rem">
-  <p class="slabel" data-r>Let's Work</p>
-  <h2 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(3.5rem,9vw,8rem);line-height:.88;margin-bottom:2.5rem" data-r data-rd="1">Got a<br><span style="color:var(--red)">project?</span></h2>
-  <p style="font-size:.9rem;color:var(--muted);line-height:1.8;margin-bottom:2rem;max-width:440px" data-r data-rd="2">Currently accepting select projects. Reach out for rates, availability, and full credits list.</p>
-  <div class="ccard" data-r data-rd="3">
-    <div class="ccorner"></div>
-    <div>
-      <p style="font-family:'Space Mono',monospace;font-size:.55rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:.5rem">Send an email</p>
-      <a href="mailto:kaushikpatil.work20@gmail.com" class="elink">kaushikpatil.work20@gmail.com</a>
+<section id="findings">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">02 / Key Findings</div>
+      <h2>What the responses show</h2>
+      <p>These headline percentages are calculated from the same spreadsheet used for the detailed question-by-question charts.</p>
     </div>
-    <div style="display:flex;flex-direction:column;align-items:flex-end;gap:1rem">
-      <span class="avail"><span class="adot"></span>Available Now</span>
-      <a href="mailto:kaushikpatil.work20@gmail.com" class="btn-p" style="font-size:.63rem">Start a Project →</a>
+    <div class="findings" id="findingsGrid"></div>
+  </div>
+</section>
+
+<section id="survey">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="kicker">03 / Survey Results</div>
+      <h2>4 Important Survey Results</h2>
+      <p>These four charts highlight the most important areas of data-privacy awareness and digital safety. Hover over a chart for exact values.</p>
+    </div>
+    <div class="toolbar reveal">
+      <div class="count">Showing <strong>67</strong> respondents across <strong>4</strong> important questions.</div>
+    </div>
+    <div class="note reveal">
+      <i class="fa-solid fa-database"></i>
+      <div><strong>Source:</strong> your uploaded survey response data. These four charts were selected to give a concise overview of privacy awareness, privacy-policy behaviour, 2FA usage, and phishing awareness.</div>
+    </div>
+    <div class="charts" id="charts"></div>
+    <div class="note reveal" style="margin-top:22px;margin-bottom:0">
+      <i class="fa-solid fa-chart-simple"></i>
+      <div><strong>Why these four?</strong> Together they cover basic awareness, privacy behaviour, account security, and phishing awareness—the main themes of the survey.</div>
     </div>
   </div>
-</div>
+</section>
 
-<!-- FOOTER -->
+<section id="field-study">
+  <div class="container">
+    <div class="section-head reveal"><div class="kicker">04 / Field Study</div><h2>Survey collection</h2><p>Photographs captured during the field study and survey collection process.</p></div>
+    <div class="slideshow-wrap reveal" id="fieldSlideshow"><div class="slideshow">
+      <div class="photo-slide active"><img src="assets/1.jpeg" alt="Field Study Photo 1"><div class="slide-number">01 / 05</div></div>
+      <div class="photo-slide"><img src="assets/2.jpeg" alt="Field Study Photo 2" loading="lazy"><div class="slide-number">02 / 05</div></div>
+      <div class="photo-slide"><img src="assets/3.jpeg" alt="Field Study Photo 3" loading="lazy"><div class="slide-number">03 / 05</div></div>
+      <div class="photo-slide"><img src="assets/4.jpeg" alt="Field Study Photo 4" loading="lazy"><div class="slide-number">04 / 05</div></div>
+      <div class="photo-slide"><img src="assets/5.jpeg" alt="Field Study Photo 5" loading="lazy"><div class="slide-number">05 / 05</div></div>
+      <button class="slide-arrow prev" type="button" aria-label="Previous photo"><i class="fa-solid fa-chevron-left"></i></button><button class="slide-arrow next" type="button" aria-label="Next photo"><i class="fa-solid fa-chevron-right"></i></button>
+      <div class="slide-dots"><button class="slide-dot active" type="button" aria-label="Photo 1"></button><button class="slide-dot" type="button" aria-label="Photo 2"></button><button class="slide-dot" type="button" aria-label="Photo 3"></button><button class="slide-dot" type="button" aria-label="Photo 4"></button><button class="slide-dot" type="button" aria-label="Photo 5"></button></div>
+    </div><div class="slideshow-caption"><span><i class="fa-solid fa-camera"></i> Field Study Documentation</span><span><i class="fa-solid fa-rotate"></i> Auto slideshow</span></div></div>
+  </div>
+</section>
+</main>
+
 <footer>
-  <div class="flogo">KAUSHIK<span>.CUTS</span></div>
-  <span class="fcopy">© 2025 Kaushik Cuts · Crafted for Impact · Mumbai, India</span>
+  <div class="container">
+    <strong>Field Study — Awareness of Data Privacy Among College Students</strong><br>
+    Survey dashboard generated from 67 submitted responses.
+  </div>
 </footer>
 
 <script>
-// LOADER
-const loader=document.getElementById('loader'),lpct=document.getElementById('lpct');
-let p=0;
-const ti=setInterval(()=>{
-  p+=Math.random()*18;
-  if(p>=100){p=100;clearInterval(ti);setTimeout(()=>loader.classList.add('hidden'),300)}
-  lpct.textContent=Math.floor(p)+'%';
-},120);
+const SURVEY_DATA = [{"id": 1, "question": "1. What is your age?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Below 18", "value": 5}, {"label": "18–20", "value": 38}, {"label": "21–23", "value": 7}, {"label": "24–26", "value": 3}, {"label": "Above 26", "value": 14}]}, {"id": 2, "question": "2. What is your gender?", "total": 67, "chart": "doughnut", "category": "choice", "multi": false, "responses": [{"label": "Male", "value": 50}, {"label": "Female", "value": 17}]}, {"id": 3, "question": "3. What year of college are you currently studying in?", "total": 67, "chart": "doughnut", "category": "choice", "multi": false, "responses": [{"label": "Second Year", "value": 21}, {"label": "Third Year", "value": 20}, {"label": "Fourth Year or above", "value": 19}, {"label": "First Year", "value": 7}]}, {"id": 4, "question": "4. What is your field of study?", "total": 67, "chart": "horizontalBar", "category": "choice", "multi": false, "responses": [{"label": "It", "value": 7}, {"label": "IT", "value": 4}, {"label": "Bsc", "value": 3}, {"label": "Engineering ", "value": 3}, {"label": "Computer Science", "value": 3}, {"label": "Finance ", "value": 3}, {"label": "Computer Science ", "value": 2}, {"label": "BscIt ", "value": 2}, {"label": "Statistics ", "value": 2}, {"label": "N/a", "value": 2}, {"label": "Bscit", "value": 2}, {"label": "Engineering", "value": 2}, {"label": "Finance", "value": 2}, {"label": "Ips", "value": 1}, {"label": "Cyber hygiene ", "value": 1}, {"label": "Bsc it", "value": 1}, {"label": "BSC it", "value": 1}, {"label": "Babah", "value": 1}, {"label": "Bsc It ", "value": 1}, {"label": "Bsc IT ", "value": 1}, {"label": "Ai & ml", "value": 1}, {"label": "Ab", "value": 1}, {"label": "BScIT", "value": 1}, {"label": "IT field ", "value": 1}, {"label": "Artificial intelligence and data science ", "value": 1}, {"label": "Information Technology ", "value": 1}, {"label": "IT ", "value": 1}, {"label": "Computer science engineering data science", "value": 1}, {"label": "Computer science", "value": 1}, {"label": "Medicine ", "value": 1}, {"label": "AI/ML", "value": 1}, {"label": "Extc", "value": 1}, {"label": "Cs", "value": 1}, {"label": "Commerce ", "value": 1}, {"label": "Electrical engineering ", "value": 1}, {"label": "Engineering  ", "value": 1}, {"label": "Banking ", "value": 1}, {"label": "Mba", "value": 1}, {"label": "Electrical", "value": 1}, {"label": "management studies", "value": 1}, {"label": "BALLB", "value": 1}, {"label": "Commerce", "value": 1}, {"label": "Film", "value": 1}]}, {"id": 5, "question": "5. Approximately how much time do you spend online each day?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Less than 2 hours", "value": 8}, {"label": "2–4 hours", "value": 13}, {"label": "4–6 hours", "value": 22}, {"label": "6–8 hours", "value": 14}, {"label": "More than 8 hours", "value": 10}]}, {"id": 6, "question": "6. Have you heard the term \"Data Privacy\" before?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 53}, {"label": "No", "value": 11}, {"label": "Not sure", "value": 3}]}, {"id": 7, "question": "7. How would you rate your knowledge of data privacy?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "1 — Very Poor", "value": 5}, {"label": "2 — Poor", "value": 8}, {"label": "3 — Average", "value": 30}, {"label": "4 — Good", "value": 19}, {"label": "5 — Excellent", "value": 5}]}, {"id": 8, "question": "8. Which of the following can be considered personal data?", "total": 67, "chart": "bar", "category": "multi", "multi": true, "responses": [{"label": "Phone number", "value": 45}, {"label": "Email address", "value": 44}, {"label": "Location", "value": 44}, {"label": "Photos / Videos", "value": 44}, {"label": "Name", "value": 30}, {"label": "Online activity", "value": 30}]}, {"id": 9, "question": "9. Do you know what a \"Privacy Policy\" is?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes, but I rarely read it", "value": 29}, {"label": "Yes, and I usually read it", "value": 21}, {"label": "I've heard of it but don't understand it", "value": 12}, {"label": "No", "value": 5}]}, {"id": 10, "question": "10. How often do you read privacy policies before using an app or website?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Never", "value": 4}, {"label": "Rarely", "value": 17}, {"label": "Sometimes", "value": 26}, {"label": "Often", "value": 9}, {"label": "Always", "value": 11}]}, {"id": 11, "question": "11. Do you know what permissions an app has access to on your phone?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Sometimes", "value": 34}, {"label": "Yes, I regularly check them", "value": 20}, {"label": "Rarely", "value": 8}, {"label": "No", "value": 5}]}, {"id": 12, "question": "12. Which app permissions can potentially reveal sensitive information?", "total": 67, "chart": "bar", "category": "multi", "multi": true, "responses": [{"label": "Camera", "value": 45}, {"label": "Microphone", "value": 42}, {"label": "Photos / Files", "value": 40}, {"label": "Location", "value": 38}, {"label": "Contacts", "value": 32}]}, {"id": 13, "question": "13. How many social media platforms do you actively use?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "2", "value": 20}, {"label": "3", "value": 19}, {"label": "4", "value": 11}, {"label": "1", "value": 10}, {"label": "5+", "value": 7}]}, {"id": 14, "question": "14. Is your main social media account private?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 34}, {"label": "No", "value": 21}, {"label": "Some accounts are private", "value": 10}, {"label": "I don't know", "value": 2}]}, {"id": 15, "question": "15. How often do you check your social media privacy settings?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Never", "value": 12}, {"label": "Once or twice", "value": 22}, {"label": "Sometimes", "value": 28}, {"label": "Regularly", "value": 5}]}, {"id": 16, "question": "16. Do you think social media platforms collect information about your interests and activities?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 41}, {"label": "No", "value": 18}, {"label": "Not sure", "value": 8}]}, {"id": 17, "question": "17. Have you ever posted personal information publicly?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "No", "value": 37}, {"label": "Yes", "value": 18}, {"label": "Not sure", "value": 12}]}, {"id": 18, "question": "18. Would you accept a friend/follow request from someone you don't personally know?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Never", "value": 10}, {"label": "Rarely", "value": 16}, {"label": "Sometimes", "value": 29}, {"label": "Always", "value": 12}]}, {"id": 19, "question": "19. Do you use different passwords for different accounts?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 29}, {"label": "For most accounts", "value": 26}, {"label": "No", "value": 10}, {"label": "I use one main password", "value": 2}]}, {"id": 20, "question": "20. How often do you change your important passwords?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Never", "value": 3}, {"label": "Rarely", "value": 12}, {"label": "Only when I forget them", "value": 16}, {"label": "Once a year", "value": 20}, {"label": "Every few months", "value": 16}]}, {"id": 21, "question": "21. Do you use Two-Factor Authentication (2FA)?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes, on most important accounts", "value": 31}, {"label": "Yes, on some accounts", "value": 26}, {"label": "No", "value": 7}, {"label": "I don't know what 2FA is", "value": 3}]}, {"id": 22, "question": "22. What would you do if you received a suspicious link?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Ignore / delete it", "value": 28}, {"label": "Check it before opening", "value": 16}, {"label": "Report the sender", "value": 12}, {"label": "Open it", "value": 8}, {"label": "I'm not sure", "value": 3}]}, {"id": 23, "question": "23. Have you ever received a suspicious message asking for personal information?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 33}, {"label": "No", "value": 25}, {"label": "Not sure", "value": 9}]}, {"id": 24, "question": "24. Do you know what \"phishing\" means?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 33}, {"label": "No", "value": 17}, {"label": "I've heard the term", "value": 17}]}, {"id": 25, "question": "25. How confident are you in identifying a fake website or phishing message?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "1 — Not confident", "value": 6}, {"label": "2", "value": 10}, {"label": "3 — Average", "value": 29}, {"label": "4", "value": 17}, {"label": "5 — Very confident", "value": 5}]}, {"id": 26, "question": "26. Do you connect your phone/laptop to public Wi-Fi networks?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Never", "value": 10}, {"label": "Rarely", "value": 14}, {"label": "Sometimes", "value": 26}, {"label": "Frequently", "value": 17}]}, {"id": 27, "question": "27. Do you save passwords in your browser or apps?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Sometimes", "value": 33}, {"label": "Yes", "value": 20}, {"label": "No", "value": 12}, {"label": "I'm not sure", "value": 2}]}, {"id": 28, "question": "28. If an app asks for unnecessary permissions, would you deny them?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Rarely", "value": 4}, {"label": "Sometimes", "value": 18}, {"label": "Usually", "value": 23}, {"label": "Always", "value": 21}]}, {"id": 29, "question": "29. Do you think college students receive enough education about data privacy and cybersecurity?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Somewhat", "value": 31}, {"label": "No", "value": 21}, {"label": "Yes", "value": 12}, {"label": "Not sure", "value": 3}]}, {"id": 30, "question": "30. What would help you become more aware of data privacy?", "total": 67, "chart": "bar", "category": "multi", "multi": true, "responses": [{"label": "Cybersecurity awareness campaigns", "value": 37}, {"label": "Social media awareness", "value": 30}, {"label": "Online courses", "value": 26}, {"label": "College workshops", "value": 22}, {"label": "Practical demonstrations", "value": 22}, {"label": "Government awareness programs", "value": 13}, {"label": "Other", "value": 8}]}];
+const KEY_FINDINGS = [{"icon": "fa-user-shield", "value": 79, "label": "Have heard of Data Privacy"}, {"icon": "fa-sliders", "value": 82, "label": "Check social-media privacy settings"}, {"icon": "fa-key", "value": 82, "label": "Use different passwords"}, {"icon": "fa-shield-halved", "value": 85, "label": "Use Two-Factor Authentication"}, {"icon": "fa-mobile-screen", "value": 81, "label": "Know/check app permissions"}, {"icon": "fa-fish-fins", "value": 75, "label": "Know or have heard of phishing"}];
+let chartInstances = [];
 
-// CURSOR
-const cdot=document.getElementById('cdot'),cring=document.getElementById('cring'),ctxt=document.getElementById('ctxt');
-let cx=window.innerWidth/2,cy=window.innerHeight/2,rx=cx,ry=cy;
-document.addEventListener('mousemove',e=>{cx=e.clientX;cy=e.clientY;cdot.style.left=cx+'px';cdot.style.top=cy+'px'});
-(function lerp(){rx+=(cx-rx)*.12;ry+=(cy-ry)*.12;
-  cring.style.left=rx+'px';cring.style.top=ry+'px';
-  ctxt.style.left=cx+'px';ctxt.style.top=(cy+50)+'px';
-  requestAnimationFrame(lerp)})();
-document.querySelectorAll('.reel-box,.reel-ov').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hpl'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hpl'));
-});
-document.querySelectorAll('a:not(.reel-ov),button').forEach(el=>{
-  el.addEventListener('mouseenter',()=>document.body.classList.add('hlk'));
-  el.addEventListener('mouseleave',()=>document.body.classList.remove('hlk'));
-});
+const palette = [
+  '#1769e0','#4f8df7','#6c63ff','#16a085','#f39c12','#e74c3c',
+  '#00a8cc','#8e44ad','#2ecc71','#e67e22','#34495e','#1abc9c'
+];
 
-// PARTICLES
-const cvs=document.getElementById('cvs'),c=cvs.getContext('2d');
-let W,H,pts=[];
-function rsz(){W=cvs.width=window.innerWidth;H=cvs.height=window.innerHeight}
-rsz();window.addEventListener('resize',rsz);
-class Pt{
-  constructor(){this.reset()}
-  reset(){this.x=Math.random()*W;this.y=Math.random()*H;this.vx=(Math.random()-.5)*.4;this.vy=(Math.random()-.5)*.4;this.r=Math.random()*1.5+.3;this.a=Math.random();this.col=Math.random()<.15?'rgba(229,36,43,':'rgba(255,255,255,'}
-  update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset()}
-  draw(){c.beginPath();c.arc(this.x,this.y,this.r,0,Math.PI*2);c.fillStyle=this.col+this.a+')';c.fill()}
+function escapeHTML(value) {
+  return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
 }
-for(let i=0;i<110;i++)pts.push(new Pt());
-function lines(){
-  for(let i=0;i<pts.length;i++)for(let j=i+1;j<pts.length;j++){
-    const dx=pts[i].x-pts[j].x,dy=pts[i].y-pts[j].y,d=Math.sqrt(dx*dx+dy*dy);
-    if(d<110){c.beginPath();c.moveTo(pts[i].x,pts[i].y);c.lineTo(pts[j].x,pts[j].y);c.strokeStyle=`rgba(229,36,43,${(1-d/110)*.1})`;c.lineWidth=.5;c.stroke()}
+
+function renderFindings() {
+  const grid = document.getElementById('findingsGrid');
+  grid.innerHTML = KEY_FINDINGS.map((f,i) => `
+    <div class="finding reveal" style="transition-delay:${i*70}ms">
+      <i class="fa-solid ${escapeHTML(f.icon)}"></i>
+      <div class="percent"><span class="counter" data-value="${f.value}">0</span>%</div>
+      <p>${escapeHTML(f.label)}</p>
+    </div>
+  `).join('');
+  observeReveals();
+}
+
+function chartConfig(item) {
+  const labels = item.responses.map(r => r.label);
+  const values = item.responses.map(r => r.value);
+  const colors = item.responses.map((_,i) => palette[i % palette.length]);
+
+  const common = {
+    responsive:true,
+    maintainAspectRatio:false,
+    animation:{
+      duration:1400,
+      easing:'easeOutQuart'
+    },
+    plugins:{
+      legend:{
+        display:item.chart === 'doughnut',
+        position:'bottom',
+        labels:{usePointStyle:true,padding:16,font:{size:10}}
+      },
+      tooltip:{
+        backgroundColor:'#0b1f3a',
+        padding:12,
+        displayColors:true,
+        callbacks:{
+          label:(ctx) => {
+            const v = ctx.raw;
+            const sum = values.reduce((a,b)=>a+b,0);
+            const percent = sum ? ((v/sum)*100).toFixed(1) : 0;
+            return ` ${ctx.label}: ${v} (${percent}%)`;
+          }
+        }
+      }
+    },
+    scales:{
+      x:{
+        grid:{display:false},
+        ticks:{font:{size:10},color:'#718096',maxRotation:45,minRotation:0}
+      },
+      y:{
+        beginAtZero:true,
+        grid:{color:'#edf2f7'},
+        ticks:{font:{size:10},color:'#718096',precision:0}
+      }
+    }
+  };
+
+  if(item.chart === 'doughnut') {
+    return {
+      type:'doughnut',
+      data:{labels,datasets:[{data:values,backgroundColor:colors,borderColor:'#fff',borderWidth:3,hoverOffset:10}]},
+      options:{...common,cutout:'64%'}
+    };
   }
+
+  const horizontal = item.chart === 'horizontalBar';
+  return {
+    type:'bar',
+    data:{labels,datasets:[{label:'Responses',data:values,backgroundColor:colors,borderRadius:8,maxBarThickness:42}]},
+    options:{
+      ...common,
+      indexAxis: horizontal ? 'y' : 'x',
+      scales: horizontal ? {
+        x:{beginAtZero:true,grid:{color:'#edf2f7'},ticks:{precision:0,font:{size:10},color:'#718096'}},
+        y:{grid:{display:false},ticks:{font:{size:10},color:'#718096'}}
+      } : common.scales
+    }
+  };
 }
-(function anim(){c.clearRect(0,0,W,H);pts.forEach(p=>{p.update();p.draw()});lines();requestAnimationFrame(anim)})();
 
-// SPOTLIGHT
-const spl=document.getElementById('spl');
-document.addEventListener('mousemove',e=>{
-  spl.style.background=`radial-gradient(700px circle at ${(e.clientX/window.innerWidth*100).toFixed(1)}% ${(e.clientY/window.innerHeight*100).toFixed(1)}%,rgba(229,36,43,.07),transparent 70%)`;
-});
+function renderCharts() {
+  chartInstances.forEach(c => c.destroy());
+  chartInstances = [];
 
-// HEADER SCROLL
-const hdr=document.getElementById('hdr');
-window.addEventListener('scroll',()=>hdr.classList.toggle('sc',window.scrollY>60));
+  const container = document.getElementById('charts');
 
-// REVEAL
-const rObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('on');rObs.unobserve(e.target)}})},{threshold:.1});
-document.querySelectorAll('[data-r]').forEach(el=>rObs.observe(el));
+  // Four most important survey areas:
+  // Q6  - Basic awareness of data privacy
+  // Q10 - Privacy-policy reading behaviour
+  // Q21 - Two-factor authentication
+  // Q24 - Phishing awareness
+  const importantIds = [6, 10, 21, 24];
+  const data = importantIds
+    .map(id => SURVEY_DATA.find(item => item.id === id))
+    .filter(Boolean);
 
-// COUNT-UP
-function countUp(el,target,dur=1600){
-  let s=null;
-  (function step(ts){if(!s)s=ts;const prog=Math.min((ts-s)/dur,1),ease=1-Math.pow(1-prog,3);
-    el.textContent=Math.floor(ease*target)+(target===100?'%':'+');
-    if(prog<1)requestAnimationFrame(step);
-  })(performance.now());
+  container.innerHTML = data.map((item, i) => `
+    <article class="chart-card reveal" style="transition-delay:${i*100}ms">
+      <div class="meta">
+        <span class="qno">Question ${String(item.id).padStart(2,'0')}</span>
+        <span class="total">${item.total} respondents</span>
+      </div>
+      <h3 class="chart-title">${escapeHTML(item.question)}</h3>
+      <div class="chart-box"><canvas id="chart-${item.id}"></canvas></div>
+      <div class="pills">
+        ${item.responses.map(r => `<span class="pill">${escapeHTML(r.label)} — <b>${r.value}</b></span>`).join('')}
+      </div>
+    </article>
+  `).join('');
+
+  data.forEach(item => {
+    const canvas = document.getElementById(`chart-${item.id}`);
+    if(canvas) chartInstances.push(new Chart(canvas, chartConfig(item)));
+  });
+
+  observeReveals();
 }
-const cObs=new IntersectionObserver(es=>{es.forEach(e=>{if(e.isIntersecting){const t=+e.target.dataset.target;if(!isNaN(t))countUp(e.target,t);cObs.unobserve(e.target)}})},{threshold:.5});
-document.querySelectorAll('.snum[data-target]').forEach(el=>cObs.observe(el));
 
-// MAGNETIC BUTTONS
-document.querySelectorAll('.btn-p,.btn-o,.nav-hire').forEach(btn=>{
-  btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();btn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.18}px,${(e.clientY-r.top-r.height/2)*.18}px)`});
-  btn.addEventListener('mouseleave',()=>btn.style.transform='');
-});
+function animateCounters() {
+  document.querySelectorAll('.counter').forEach(el => {
+    const target = Number(el.dataset.value);
+    let start = null;
+    function step(ts) {
+      if(start === null) start = ts;
+      const p = Math.min((ts-start)/1100,1);
+      const eased = 1-Math.pow(1-p,3);
+      el.textContent = Math.round(target*eased);
+      if(p<1) requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
+  });
+}
 
-// TILT CARDS
-document.querySelectorAll('.pcard').forEach(card=>{
-  card.addEventListener('mousemove',e=>{const r=card.getBoundingClientRect();card.style.transform=`perspective(900px) rotateX(${((e.clientY-r.top)/r.height-.5)*-12}deg) rotateY(${((e.clientX-r.left)/r.width-.5)*12}deg)`});
-  card.addEventListener('mouseleave',()=>card.style.transform='perspective(900px) rotateX(0) rotateY(0)');
-});
+
+/* FIELD STUDY SLIDESHOW */
+const slides=[...document.querySelectorAll('.photo-slide')],dots=[...document.querySelectorAll('.slide-dot')],prev=document.querySelector('.slide-arrow.prev'),next=document.querySelector('.slide-arrow.next'),showBox=document.getElementById('fieldSlideshow');let currentSlide=0,slideTimer;function showSlide(i){currentSlide=(i+slides.length)%slides.length;slides.forEach((x,n)=>x.classList.toggle('active',n===currentSlide));dots.forEach((x,n)=>x.classList.toggle('active',n===currentSlide))}function startSlideshow(){clearInterval(slideTimer);slideTimer=setInterval(()=>showSlide(currentSlide+1),3000)}prev?.addEventListener('click',()=>{showSlide(currentSlide-1);startSlideshow()});next?.addEventListener('click',()=>{showSlide(currentSlide+1);startSlideshow()});dots.forEach((d,i)=>d.addEventListener('click',()=>{showSlide(i);startSlideshow()}));showBox?.addEventListener('mouseenter',()=>clearInterval(slideTimer));showBox?.addEventListener('mouseleave',startSlideshow);showSlide(0);startSlideshow();
+
+function observeReveals() {
+  const items = document.querySelectorAll('.reveal:not(.observed)');
+  const observer = new IntersectionObserver((entries,obs) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        entry.target.classList.add('observed');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, {threshold:.12});
+  items.forEach(el => observer.observe(el));
+}
+
+renderFindings();
+renderCharts();
+
+
+const findingsObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) {
+      animateCounters();
+      findingsObserver.disconnect();
+    }
+  });
+}, {threshold:.25});
+findingsObserver.observe(document.getElementById('findingsGrid'));
+
+observeReveals();
 </script>
 </body>
 </html>
