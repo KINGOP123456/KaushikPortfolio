@@ -1,416 +1,353 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data Privacy Awareness — Field Study Dashboard</title>
-<meta name="description" content="Field Study dashboard based on a survey of 67 college students about data privacy awareness.">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KAUSHIK.CUTS | Professional Video Editor Portfolio</title>
 
-<style>
-:root {
-  --navy:#0b1f3a;
-  --blue:#1769e0;
-  --blue2:#4f8df7;
-  --sky:#eaf3ff;
-  --text:#172033;
-  --muted:#65748b;
-  --line:#e3ebf5;
-  --card:#ffffff;
-  --bg:#f7faff;
-  --shadow:0 18px 55px rgba(24,54,93,.09);
-  --radius:22px;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:Inter,Arial,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
-a{color:inherit;text-decoration:none}
-.container{width:min(1180px,92%);margin:auto}
-header{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(255,255,255,.86);backdrop-filter:blur(16px);border-bottom:1px solid rgba(227,235,245,.8)}
-.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.brand{font-weight:800;color:var(--navy);letter-spacing:-.04em}
-.brand span{color:var(--blue)}
-nav{display:flex;gap:22px;font-size:13px;font-weight:600;color:#58677c}
-nav a{transition:.25s}
-nav a:hover{color:var(--blue)}
-.hero{padding:150px 0 85px;background:radial-gradient(circle at 85% 20%,#dcecff 0,transparent 34%),linear-gradient(135deg,#fff,#f2f7ff)}
-.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:55px;align-items:center}
-.eyebrow{display:inline-flex;align-items:center;gap:8px;color:var(--blue);font-size:12px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin-bottom:18px}
-h1{font-size:clamp(38px,6vw,70px);line-height:1.02;letter-spacing:-.06em;color:var(--navy);margin-bottom:22px}
-.hero p{font-size:17px;color:var(--muted);max-width:690px}
-.hero-card{background:#fff;border:1px solid var(--line);border-radius:28px;padding:30px;box-shadow:var(--shadow);position:relative;overflow:hidden}
-.hero-card:before{content:"";position:absolute;width:170px;height:170px;border-radius:50%;right:-55px;top:-60px;background:#e7f1ff}
-.stat-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;position:relative}
-.stat{padding:20px;border:1px solid var(--line);border-radius:18px;background:#fff}
-.stat .num{font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.04em}
-.stat .label{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
-section{padding:92px 0}
-.section-head{margin-bottom:36px}
-.kicker{color:var(--blue);font-size:11px;font-weight:800;letter-spacing:.13em;text-transform:uppercase;margin-bottom:8px}
-h2{font-size:clamp(30px,4vw,46px);line-height:1.1;letter-spacing:-.05em;color:var(--navy)}
-.section-head p{margin-top:12px;color:var(--muted);max-width:760px}
-.findings{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.finding{background:#fff;border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(24,54,93,.05);transition:transform .3s,box-shadow .3s}
-.finding:hover{transform:translateY(-6px);box-shadow:var(--shadow)}
-.finding i{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:var(--sky);color:var(--blue);margin-bottom:16px}
-.finding .percent{font-size:34px;font-weight:800;color:var(--navy)}
-.finding p{font-size:13px;color:var(--muted)}
-.toolbar{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-bottom:22px;flex-wrap:wrap}
-.count{font-size:13px;color:var(--muted)}
-select{border:1px solid var(--line);background:#fff;border-radius:12px;padding:11px 14px;font:inherit;font-size:13px;color:var(--text);outline:none}
-.note{display:flex;gap:12px;align-items:flex-start;padding:15px 17px;background:#eef6ff;border:1px solid #d6e8ff;border-radius:15px;color:#52637a;font-size:12px;margin-bottom:26px}
-.note i{color:var(--blue);margin-top:3px}
-.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
-.chart-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:22px;box-shadow:0 10px 35px rgba(24,54,93,.055);transition:transform .35s,box-shadow .35s}
-.chart-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
-.chart-card.wide{grid-column:1/-1}
-.charts .chart-card{min-height:460px}
-.charts .chart-card:nth-child(1){border-top:4px solid #1769e0}
-.charts .chart-card:nth-child(2){border-top:4px solid #4f8df7}
-.charts .chart-card:nth-child(3){border-top:4px solid #6c63ff}
-.charts .chart-card:nth-child(4){border-top:4px solid #16a085}
-.meta{display:flex;justify-content:space-between;gap:12px;margin-bottom:12px}
-.qno,.total{font-size:10px;font-weight:800;letter-spacing:.09em;color:var(--blue);text-transform:uppercase}
-.total{color:#8b98aa}
-.chart-title{font-size:16px;line-height:1.4;color:var(--navy);margin-bottom:15px}
-.chart-box{height:310px;position:relative}
-.chart-card.wide .chart-box{height:390px}
-.pills{display:flex;flex-wrap:wrap;gap:7px;margin-top:16px}
-.pill{background:#f4f7fb;border:1px solid #e8eef6;border-radius:999px;padding:5px 9px;font-size:10px;color:#637187}
-.pill b{color:var(--navy)}
-.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
-.info-card{background:#fff;border:1px solid var(--line);border-radius:22px;padding:28px;box-shadow:0 10px 35px rgba(24,54,93,.05)}
-.info-card h3{color:var(--navy);margin-bottom:9px}
-.info-card p,.info-card li{font-size:13px;color:var(--muted)}
-.info-card ul{padding-left:18px}
-.photos{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
-.photo{aspect-ratio:4/3;border:2px dashed #cbd9ea;border-radius:20px;background:#fff;display:grid;place-items:center;text-align:center;padding:25px;color:#8090a5}
-.photo i{font-size:30px;color:#9bb4d2;margin-bottom:8px}
-/* GOOGLE FORM BUTTON */
-.form-button-wrap{margin-top:22px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}.form-button{position:relative;display:inline-flex;align-items:center;gap:12px;padding:14px 20px;border-radius:15px;color:#fff;font-size:13px;font-weight:800;overflow:hidden;background:linear-gradient(135deg,#1769e0,#6c63ff);box-shadow:0 12px 30px rgba(23,105,224,.22);transition:.3s}.form-button:before{content:"";position:absolute;inset:-80% 35% auto -20%;height:180%;background:rgba(255,255,255,.2);transform:rotate(25deg);transition:.5s}.form-button:hover{transform:translateY(-4px);box-shadow:0 18px 38px rgba(23,105,224,.3)}.form-button:hover:before{transform:translateX(190%) rotate(25deg)}.form-button .form-icon{position:relative;width:34px;height:34px;display:grid;place-items:center;border-radius:10px;background:rgba(255,255,255,.18)}.form-button .form-copy{position:relative;display:flex;flex-direction:column;line-height:1.15}.form-button .form-copy small{margin-top:4px;font-size:9px;font-weight:600;opacity:.82}.form-button .arrow{position:relative;margin-left:4px;transition:.3s}.form-button:hover .arrow{transform:translateX(4px)}.form-note{font-size:11px;color:#7a889c}
-/* FIELD STUDY SLIDESHOW */
-.slideshow-wrap{position:relative;width:min(420px,92vw);margin:0 auto}.slideshow{position:relative;width:100%;aspect-ratio:9/16;height:auto;min-height:0;background:#0b1f3a;border:1px solid rgba(255,255,255,.7);border-radius:28px;overflow:hidden;box-shadow:0 25px 70px rgba(24,54,93,.18)}.slideshow:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 15%,rgba(79,141,247,.18),transparent 30%),radial-gradient(circle at 80% 85%,rgba(108,99,255,.16),transparent 30%);pointer-events:none;z-index:1}.photo-slide{position:absolute;inset:0;display:grid;place-items:center;opacity:0;visibility:hidden;transition:opacity .65s ease,visibility .65s ease;z-index:2}.photo-slide.active{opacity:1;visibility:visible}.photo-slide img{width:100%;height:100%;object-fit:contain;display:block;position:relative;z-index:1}.slide-number{position:absolute;top:18px;right:18px;z-index:4;padding:8px 12px;border-radius:999px;background:rgba(11,31,58,.72);color:#fff;border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(10px);font-size:10px;font-weight:800;letter-spacing:.12em}.slide-arrow{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:44px;height:44px;border:1px solid rgba(255,255,255,.25);border-radius:50%;display:grid;place-items:center;color:#fff;background:rgba(11,31,58,.62);backdrop-filter:blur(10px);cursor:pointer;transition:.3s}.slide-arrow:hover{background:rgba(23,105,224,.88);transform:translateY(-50%) scale(1.08)}.slide-arrow.prev{left:18px}.slide-arrow.next{right:18px}.slide-dots{position:absolute;left:50%;bottom:20px;transform:translateX(-50%);z-index:5;display:flex;gap:8px;padding:9px 12px;border-radius:999px;background:rgba(11,31,58,.62);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px)}.slide-dot{width:8px;height:8px;padding:0;border:0;border-radius:50%;background:rgba(255,255,255,.42);cursor:pointer;transition:.3s}.slide-dot.active{width:25px;border-radius:999px;background:#fff}.slideshow-caption{display:flex;justify-content:space-between;gap:15px;margin-top:14px;padding:0 5px;color:#718096;font-size:11px;font-weight:600}.slideshow-caption span{display:flex;align-items:center;gap:7px}.slideshow-caption i{color:var(--blue)}
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
 
-footer{padding:35px 0;background:var(--navy);color:#c8d5e8;font-size:12px}
-footer strong{color:#fff}
-.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:none}
-@media(max-width:900px){
-  nav{display:none}
-  .hero-grid,.about-grid{grid-template-columns:1fr}
-  .findings{grid-template-columns:repeat(2,1fr)}
-  .charts{grid-template-columns:1fr}
-  .chart-card.wide{grid-column:auto}
-}
-@media(max-width:600px){
-  section{padding:70px 0}
-  .hero{padding-top:120px}
-  .findings,.photos{grid-template-columns:1fr}
-  .stat-grid{grid-template-columns:1fr 1fr}
-  .chart-box,.chart-card.wide .chart-box{height:280px}
-  .slideshow-wrap{width:min(94vw,380px)}.slideshow{width:100%;aspect-ratio:9/16;height:auto;min-height:0;border-radius:20px}.slide-arrow{width:38px;height:38px}.slide-arrow.prev{left:10px}.slide-arrow.next{right:10px}.slide-number{top:12px;right:12px}.slideshow-caption{font-size:10px}
-}
-</style>
+  <!-- Favicon & Meta Preview -->
+  <link rel="icon" href="kc-logo.png" />
+  <meta property="og:title" content="KAUSHIK.CUTS | Professional Video Editor Portfolio" />
+  <meta property="og:description" content="Crafting stories through cinematic editing, color, and sound. Discover my portfolio." />
+  <meta property="og:image" content="kc-preview.jpg" />
+  <meta property="og:type" content="website" />
+
+  <style>
+    :root {
+      --primary-color: #ef4444;
+      --dark-bg: #0a0a0a;
+      --mid-bg: #1a1a1a;
+      --text-color: #f9fafb;
+    }
+    body {
+      font-family: "Inter", sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-color);
+      transition: background-color 0.3s ease;
+      background-image: radial-gradient(circle at 1px 1px, #222 1px, transparent 0);
+      background-size: 20px 20px;
+      scroll-behavior: smooth;
+    }
+
+    .portfolio-header {
+      background-color: var(--mid-bg);
+      border-bottom: 2px solid var(--primary-color);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4);
+    }
+
+    .section-title {
+      color: var(--primary-color);
+      border-bottom: 2px solid var(--mid-bg);
+      display: inline-block;
+      padding-bottom: 4px;
+    }
+
+    .project-card {
+      background-color: var(--mid-bg);
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid #333;
+    }
+    .project-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 25px -5px rgba(239, 68, 68, 0.3),
+        0 6px 10px -3px rgba(239, 68, 68, 0.15);
+    }
+
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--primary-color);
+      border-radius: 10px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--mid-bg);
+    }
+
+    .video-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+    }
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .thumbnail-container {
+      position: relative;
+      padding-bottom: 56.25%;
+      height: 0;
+      overflow: hidden;
+      max-width: 100%;
+      cursor: pointer;
+      background-color: #000;
+    }
+    .thumbnail-container img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .thumbnail-container .play-button {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(239, 68, 68, 0.8);
+      border-radius: 50%;
+      padding: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s ease;
+    }
+    .thumbnail-container:hover .play-button {
+      background-color: rgba(239, 68, 68, 1);
+    }
+
+    #reel .video-container {
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.5);
+      transition: box-shadow 0.3s;
+    }
+    #reel .video-container:hover {
+      box-shadow: 0 0 60px rgba(239, 68, 68, 0.7);
+    }
+
+    /* Fade-in animation */
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+    [data-animate].visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 
-<body>
-<header>
-  <div class="container nav">
-    <a class="brand" href="#home">DATA<span>PRIVACY</span> · FIELD STUDY</a>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#about">About</a>
-      <a href="#findings">Findings</a>
-      <a href="#survey">Survey Results</a>
-      <a href="#field-study">Field Study</a>
-    </nav>
-  </div>
-</header>
+<body class="antialiased min-h-screen">
+  <!-- Header -->
+  <header class="portfolio-header sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+      <h1 class="text-3xl font-extrabold tracking-tight">
+        <span class="text-white">KAUSHIK</span>
+        <span class="text-red-500">.CUTS</span>
+      </h1>
+      <nav class="space-x-6 hidden md:block">
+        <a href="#work" class="text-sm font-medium text-white hover:text-red-400 transition">Work</a>
+        <a href="#about" class="text-sm font-medium text-white hover:text-red-400 transition">About</a>
+        <a href="#contact" class="text-sm font-medium text-white hover:text-red-400 transition">Contact</a>
+      </nav>
+    </div>
+  </header>
 
-<main>
-<section class="hero" id="home">
-  <div class="container hero-grid">
-    <div class="reveal">
-      <div class="eyebrow"><i class="fa-solid fa-shield-halved"></i> College Field Study</div>
-      <h1>Awareness of Data Privacy Among College Students</h1>
-      <p>
-        An interactive presentation of the responses collected through our
-        college survey, showing awareness, online habits, privacy practices,
-        and student experiences through clear visualizations.
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+    <!-- Reel Section -->
+    <section id="reel" class="mb-24 text-center" data-animate>
+      <h2 class="text-4xl sm:text-6xl font-extrabold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-red-400 to-red-600">
+        Crafting Stories. Driving Vision.
+      </h2>
+      <p class="text-xl text-gray-400 mb-12 max-w-4xl mx-auto">
+        Bridging <b>Cinematography, Acting, and Post-Production</b> to deliver truly resonant visual experiences.
       </p>
-    </div>
-    <div class="hero-card reveal">
-      <div class="stat-grid">
-        <div class="stat"><div class="num">67</div><div class="label">Respondents</div></div>
-        <div class="stat"><div class="num">30</div><div class="label">Questions</div></div>
-        <div class="stat"><div class="num">100%</div><div class="label">Survey Data</div></div>
-        <div class="stat"><div class="num">Live</div><div class="label">Interactive Charts</div></div>
+
+    <div class="thumbnail-container rounded-lg overflow-hidden mb-4">
+  <a href="https://youtube.com/@kvines01?si=qoMFzL67mBivPLcy" target="_blank">
+    <img src="assets/PP.png" alt="Reel Thumbnail">
+    
+  </a>
+</div>
+
+
+
+      <a href="#contact"
+        class="mt-12 inline-block py-3 px-8 rounded-full bg-red-600 text-white font-bold text-lg tracking-wider hover:bg-red-700 transition shadow-2xl shadow-red-500/50">
+        START A PROJECT
+      </a>
+    </section>
+
+    <!-- Work Section -->
+    <section id="work" class="mb-24" data-animate>
+      <h2 class="text-4xl font-bold section-title mb-12">Featured Projects</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Project 1 -->
+        <div class="project-card p-6 rounded-xl shadow-xl">
+          <h3 class="text-xl font-semibold mb-3 text-red-400">Velocity Sneaker Launch (Commercial)</h3>
+          <div class="thumbnail-container rounded-lg overflow-hidden mb-4">
+    <a href="https://youtu.be/6emTX_HF0dk" target="_blank" rel="noopener noreferrer">
+        <img src="assets/colorg.jpg" alt="Velocity Sneaker Launch Thumbnail">
+        <div class="play-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
+                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+            </svg>
+        </div>
+    </a>
+</div>
+
+          <p class="text-sm text-gray-300">
+            A high-energy commercial focused on dynamic cuts, cinematic color grading, and punchy sound design to
+            maximize product visibility.
+          </p>
+          <p class="text-xs text-red-500 mt-2 font-bold">Role: Editor, Cinematography. Colorist</p>
+        </div>
+
+        <!-- Project 2 -->
+        <div class="project-card p-6 rounded-xl shadow-xl">
+          <h3 class="text-xl font-semibold mb-3 text-red-400">SCAM OF DREAMS | Short Film</h3>
+          <div class="thumbnail-container rounded-lg overflow-hidden mb-4">
+            <a href="https://youtu.be/HWvu4Nrfv9o" target="_blank" rel="noopener noreferrer">
+              <img src="assets/dreams.png" alt="SCAM OF DREAMS Thumbnail" />
+              <div class="play-button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white"
+                  stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="feather feather-play">
+                  <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                </svg>
+              </div>
+            </a>
+          </div>
+          <p class="text-sm text-gray-300">
+            A dramatic short exploring online financial scams and emotional impact through sharp cuts and sound design.
+          </p>
+          <p class="text-xs text-red-500 mt-2 font-bold">Role:Story Writing, Storytelling, Acting, Cinematography. Editor, Sound Mix & VO Integration</p>
+        </div>
+
+        <!-- Project 3 -->
+        <!-- Project Card 3: Narrative Short (New Project) -->
+<div class="project-card p-6 rounded-xl shadow-xl hover:scale-[1.02]">
+  <h3 class="text-xl font-semibold mb-3 text-red-400">
+    Short Film: 'After 10th'
+  </h3>
+
+  <div class="thumbnail-container rounded-lg overflow-hidden mb-4">
+    <a href="https://youtu.be/fkhcW7IayEc" target="_blank" rel="noopener noreferrer">
+      <img src="assets/After10th.png" alt="After 10th Short Film Thumbnail">
+      <div class="play-button">
+        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-play">
+          <polygon points="5 3 19 12 5 21 5 3"></polygon>
+        </svg>
       </div>
-    </div>
+    </a>
   </div>
-</section>
 
-<section id="about">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="kicker">01 / About</div>
-      <h2>What this study explores</h2>
-      <p>The survey focuses on how college students understand and manage personal data, passwords, permissions, phishing, social-media privacy and other digital-safety practices.</p>
-    </div>
-    <div class="about-grid">
-      <div class="info-card reveal">
-        <h3><i class="fa-solid fa-bullseye"></i> Objective</h3>
-        <p>To understand the level of data-privacy awareness among college students and identify common online privacy and security practices.</p>
+  <p class="text-sm text-gray-300">
+    A relatable short film exploring the pressure and uncertainty students face when choosing their path after 10th grade. Demonstrated skills in managing multi-character dialogues and creating emotional resonance through deliberate pacing and music.
+  </p>
+
+  <p class="text-xs text-red-500 mt-2 font-bold">Role:Story Writing, Storytelling Editor, Acting, Cinematography.</p>
+</div>
+
+
+        
+        </div>
       </div>
-      <div class="info-card reveal">
-        <h3><i class="fa-solid fa-clipboard-list"></i> Methodology</h3>
-        <p>Primary data was collected using a Google Form survey. The charts below are generated directly from the submitted response spreadsheet.</p>
-        <div class="form-button-wrap"><a class="form-button" href="https://docs.google.com/forms/d/1YmJfmB4PHAbBXRcp3cJ6UdywWYF5SSaPAco90Fru8pk/viewform?edit_requested=true" target="_blank" rel="noopener noreferrer"><span class="form-icon"><i class="fa-solid fa-file-signature"></i></span><span class="form-copy">Open Google Form<small>View the original survey questionnaire</small></span><i class="fa-solid fa-arrow-up-right-from-square arrow"></i></a><span class="form-note">Opens in a new tab ↗</span></div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="mb-24" data-animate>
+      <h2 class="text-4xl font-bold section-title mb-12">The Editor's Mindset</h2>
+      <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border-l-4 border-red-500">
+        <div class="md:flex md:space-x-8">
+          <div class="flex-shrink-0 mb-6 md:mb-0 w-32 h-32 mx-auto md:mx-0">
+            <img src="https://placehold.co/128x128/EF4444/000000?text=K.C" alt="Profile Picture"
+              class="rounded-full object-cover w-full h-full border-4 border-white" />
+          </div>
+          <div class="md:flex-grow">
+            <p class="text-xl font-semibold mb-4 text-red-400">My Philosophy: Every Frame Counts</p>
+            <p class="text-gray-300 leading-relaxed">
+              I specialize in finding the narrative truth within raw footage. Editing should be invisible yet
+              unforgettable — serving both rhythm and emotion for maximum audience impact.
+            </p>
+
+            <div class="mt-6">
+              <h4 class="text-red-500 font-bold mb-3">Related Creative Disciplines</h4>
+              <p class="text-gray-300 text-sm leading-relaxed">
+                My foundation in <b>Cinematography</b>, <b>Photography</b>, and <b>Acting</b> allows me to edit with
+                insight into performance, pacing, and visual storytelling.
+              </p>
+            </div>
+
+            <div class="mt-6">
+              <h4 class="text-red-500 font-bold mb-3">Core Toolset & Skills</h4>
+              <div class="flex flex-wrap gap-2">
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">Adobe
+                  Premiere Pro</span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">DaVinci
+                  Resolve </span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">After
+                  Effects </span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">Sound
+                  Design & Mix</span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">Cinematic
+                  Pacing</span>
+                <span
+                  class="bg-red-900/50 text-red-300 text-xs font-semibold px-3 py-1 rounded-full hover:bg-red-700 transition">4K
+                  Workflow</span>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section id="findings">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="kicker">02 / Key Findings</div>
-      <h2>What the responses show</h2>
-      <p>These headline percentages are calculated from the same spreadsheet used for the detailed question-by-question charts.</p>
-    </div>
-    <div class="findings" id="findingsGrid"></div>
-  </div>
-</section>
-
-<section id="survey">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="kicker">03 / Survey Results</div>
-      <h2>4 Important Survey Results</h2>
-      <p>These four charts highlight the most important areas of data-privacy awareness and digital safety. Hover over a chart for exact values.</p>
-    </div>
-    <div class="toolbar reveal">
-      <div class="count">Showing <strong>67</strong> respondents across <strong>4</strong> important questions.</div>
-    </div>
-    <div class="note reveal">
-      <i class="fa-solid fa-database"></i>
-      <div><strong>Source:</strong> your uploaded survey response data. These four charts were selected to give a concise overview of privacy awareness, privacy-policy behaviour, 2FA usage, and phishing awareness.</div>
-    </div>
-    <div class="charts" id="charts"></div>
-    <div class="note reveal" style="margin-top:22px;margin-bottom:0">
-      <i class="fa-solid fa-chart-simple"></i>
-      <div><strong>Why these four?</strong> Together they cover basic awareness, privacy behaviour, account security, and phishing awareness—the main themes of the survey.</div>
-    </div>
-  </div>
-</section>
-
-<section id="field-study">
-  <div class="container">
-    <div class="section-head reveal"><div class="kicker">04 / Field Study</div><h2>Survey collection</h2><p>Photographs captured during the field study and survey collection process.</p></div>
-    <div class="slideshow-wrap reveal" id="fieldSlideshow"><div class="slideshow">
-      <div class="photo-slide active"><img src="assets/1.jpeg" alt="Field Study Photo 1"><div class="slide-number">01 / 05</div></div>
-      <div class="photo-slide"><img src="assets/2.jpeg" alt="Field Study Photo 2" loading="lazy"><div class="slide-number">02 / 05</div></div>
-      <div class="photo-slide"><img src="assets/3.jpeg" alt="Field Study Photo 3" loading="lazy"><div class="slide-number">03 / 05</div></div>
-      <div class="photo-slide"><img src="assets/4.jpeg" alt="Field Study Photo 4" loading="lazy"><div class="slide-number">04 / 05</div></div>
-      <div class="photo-slide"><img src="assets/5.jpeg" alt="Field Study Photo 5" loading="lazy"><div class="slide-number">05 / 05</div></div>
-      <button class="slide-arrow prev" type="button" aria-label="Previous photo"><i class="fa-solid fa-chevron-left"></i></button><button class="slide-arrow next" type="button" aria-label="Next photo"><i class="fa-solid fa-chevron-right"></i></button>
-      <div class="slide-dots"><button class="slide-dot active" type="button" aria-label="Photo 1"></button><button class="slide-dot" type="button" aria-label="Photo 2"></button><button class="slide-dot" type="button" aria-label="Photo 3"></button><button class="slide-dot" type="button" aria-label="Photo 4"></button><button class="slide-dot" type="button" aria-label="Photo 5"></button></div>
-    </div><div class="slideshow-caption"><span><i class="fa-solid fa-camera"></i> Field Study Documentation</span><span><i class="fa-solid fa-rotate"></i> Auto slideshow</span></div></div>
-  </div>
-</section>
-</main>
-
-<footer>
-  <div class="container">
-    <strong>Field Study — Awareness of Data Privacy Among College Students</strong><br>
-    Survey dashboard generated from 67 submitted responses.
-  </div>
-</footer>
-
-<script>
-const SURVEY_DATA = [{"id": 1, "question": "1. What is your age?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Below 18", "value": 5}, {"label": "18–20", "value": 38}, {"label": "21–23", "value": 7}, {"label": "24–26", "value": 3}, {"label": "Above 26", "value": 14}]}, {"id": 2, "question": "2. What is your gender?", "total": 67, "chart": "doughnut", "category": "choice", "multi": false, "responses": [{"label": "Male", "value": 50}, {"label": "Female", "value": 17}]}, {"id": 3, "question": "3. What year of college are you currently studying in?", "total": 67, "chart": "doughnut", "category": "choice", "multi": false, "responses": [{"label": "Second Year", "value": 21}, {"label": "Third Year", "value": 20}, {"label": "Fourth Year or above", "value": 19}, {"label": "First Year", "value": 7}]}, {"id": 4, "question": "4. What is your field of study?", "total": 67, "chart": "horizontalBar", "category": "choice", "multi": false, "responses": [{"label": "It", "value": 7}, {"label": "IT", "value": 4}, {"label": "Bsc", "value": 3}, {"label": "Engineering ", "value": 3}, {"label": "Computer Science", "value": 3}, {"label": "Finance ", "value": 3}, {"label": "Computer Science ", "value": 2}, {"label": "BscIt ", "value": 2}, {"label": "Statistics ", "value": 2}, {"label": "N/a", "value": 2}, {"label": "Bscit", "value": 2}, {"label": "Engineering", "value": 2}, {"label": "Finance", "value": 2}, {"label": "Ips", "value": 1}, {"label": "Cyber hygiene ", "value": 1}, {"label": "Bsc it", "value": 1}, {"label": "BSC it", "value": 1}, {"label": "Babah", "value": 1}, {"label": "Bsc It ", "value": 1}, {"label": "Bsc IT ", "value": 1}, {"label": "Ai & ml", "value": 1}, {"label": "Ab", "value": 1}, {"label": "BScIT", "value": 1}, {"label": "IT field ", "value": 1}, {"label": "Artificial intelligence and data science ", "value": 1}, {"label": "Information Technology ", "value": 1}, {"label": "IT ", "value": 1}, {"label": "Computer science engineering data science", "value": 1}, {"label": "Computer science", "value": 1}, {"label": "Medicine ", "value": 1}, {"label": "AI/ML", "value": 1}, {"label": "Extc", "value": 1}, {"label": "Cs", "value": 1}, {"label": "Commerce ", "value": 1}, {"label": "Electrical engineering ", "value": 1}, {"label": "Engineering  ", "value": 1}, {"label": "Banking ", "value": 1}, {"label": "Mba", "value": 1}, {"label": "Electrical", "value": 1}, {"label": "management studies", "value": 1}, {"label": "BALLB", "value": 1}, {"label": "Commerce", "value": 1}, {"label": "Film", "value": 1}]}, {"id": 5, "question": "5. Approximately how much time do you spend online each day?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Less than 2 hours", "value": 8}, {"label": "2–4 hours", "value": 13}, {"label": "4–6 hours", "value": 22}, {"label": "6–8 hours", "value": 14}, {"label": "More than 8 hours", "value": 10}]}, {"id": 6, "question": "6. Have you heard the term \"Data Privacy\" before?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 53}, {"label": "No", "value": 11}, {"label": "Not sure", "value": 3}]}, {"id": 7, "question": "7. How would you rate your knowledge of data privacy?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "1 — Very Poor", "value": 5}, {"label": "2 — Poor", "value": 8}, {"label": "3 — Average", "value": 30}, {"label": "4 — Good", "value": 19}, {"label": "5 — Excellent", "value": 5}]}, {"id": 8, "question": "8. Which of the following can be considered personal data?", "total": 67, "chart": "bar", "category": "multi", "multi": true, "responses": [{"label": "Phone number", "value": 45}, {"label": "Email address", "value": 44}, {"label": "Location", "value": 44}, {"label": "Photos / Videos", "value": 44}, {"label": "Name", "value": 30}, {"label": "Online activity", "value": 30}]}, {"id": 9, "question": "9. Do you know what a \"Privacy Policy\" is?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes, but I rarely read it", "value": 29}, {"label": "Yes, and I usually read it", "value": 21}, {"label": "I've heard of it but don't understand it", "value": 12}, {"label": "No", "value": 5}]}, {"id": 10, "question": "10. How often do you read privacy policies before using an app or website?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Never", "value": 4}, {"label": "Rarely", "value": 17}, {"label": "Sometimes", "value": 26}, {"label": "Often", "value": 9}, {"label": "Always", "value": 11}]}, {"id": 11, "question": "11. Do you know what permissions an app has access to on your phone?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Sometimes", "value": 34}, {"label": "Yes, I regularly check them", "value": 20}, {"label": "Rarely", "value": 8}, {"label": "No", "value": 5}]}, {"id": 12, "question": "12. Which app permissions can potentially reveal sensitive information?", "total": 67, "chart": "bar", "category": "multi", "multi": true, "responses": [{"label": "Camera", "value": 45}, {"label": "Microphone", "value": 42}, {"label": "Photos / Files", "value": 40}, {"label": "Location", "value": 38}, {"label": "Contacts", "value": 32}]}, {"id": 13, "question": "13. How many social media platforms do you actively use?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "2", "value": 20}, {"label": "3", "value": 19}, {"label": "4", "value": 11}, {"label": "1", "value": 10}, {"label": "5+", "value": 7}]}, {"id": 14, "question": "14. Is your main social media account private?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 34}, {"label": "No", "value": 21}, {"label": "Some accounts are private", "value": 10}, {"label": "I don't know", "value": 2}]}, {"id": 15, "question": "15. How often do you check your social media privacy settings?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Never", "value": 12}, {"label": "Once or twice", "value": 22}, {"label": "Sometimes", "value": 28}, {"label": "Regularly", "value": 5}]}, {"id": 16, "question": "16. Do you think social media platforms collect information about your interests and activities?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 41}, {"label": "No", "value": 18}, {"label": "Not sure", "value": 8}]}, {"id": 17, "question": "17. Have you ever posted personal information publicly?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "No", "value": 37}, {"label": "Yes", "value": 18}, {"label": "Not sure", "value": 12}]}, {"id": 18, "question": "18. Would you accept a friend/follow request from someone you don't personally know?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Never", "value": 10}, {"label": "Rarely", "value": 16}, {"label": "Sometimes", "value": 29}, {"label": "Always", "value": 12}]}, {"id": 19, "question": "19. Do you use different passwords for different accounts?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 29}, {"label": "For most accounts", "value": 26}, {"label": "No", "value": 10}, {"label": "I use one main password", "value": 2}]}, {"id": 20, "question": "20. How often do you change your important passwords?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Never", "value": 3}, {"label": "Rarely", "value": 12}, {"label": "Only when I forget them", "value": 16}, {"label": "Once a year", "value": 20}, {"label": "Every few months", "value": 16}]}, {"id": 21, "question": "21. Do you use Two-Factor Authentication (2FA)?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes, on most important accounts", "value": 31}, {"label": "Yes, on some accounts", "value": 26}, {"label": "No", "value": 7}, {"label": "I don't know what 2FA is", "value": 3}]}, {"id": 22, "question": "22. What would you do if you received a suspicious link?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "Ignore / delete it", "value": 28}, {"label": "Check it before opening", "value": 16}, {"label": "Report the sender", "value": 12}, {"label": "Open it", "value": 8}, {"label": "I'm not sure", "value": 3}]}, {"id": 23, "question": "23. Have you ever received a suspicious message asking for personal information?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 33}, {"label": "No", "value": 25}, {"label": "Not sure", "value": 9}]}, {"id": 24, "question": "24. Do you know what \"phishing\" means?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Yes", "value": 33}, {"label": "No", "value": 17}, {"label": "I've heard the term", "value": 17}]}, {"id": 25, "question": "25. How confident are you in identifying a fake website or phishing message?", "total": 67, "chart": "bar", "category": "choice", "multi": false, "responses": [{"label": "1 — Not confident", "value": 6}, {"label": "2", "value": 10}, {"label": "3 — Average", "value": 29}, {"label": "4", "value": 17}, {"label": "5 — Very confident", "value": 5}]}, {"id": 26, "question": "26. Do you connect your phone/laptop to public Wi-Fi networks?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Never", "value": 10}, {"label": "Rarely", "value": 14}, {"label": "Sometimes", "value": 26}, {"label": "Frequently", "value": 17}]}, {"id": 27, "question": "27. Do you save passwords in your browser or apps?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Sometimes", "value": 33}, {"label": "Yes", "value": 20}, {"label": "No", "value": 12}, {"label": "I'm not sure", "value": 2}]}, {"id": 28, "question": "28. If an app asks for unnecessary permissions, would you deny them?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Rarely", "value": 4}, {"label": "Sometimes", "value": 18}, {"label": "Usually", "value": 23}, {"label": "Always", "value": 21}]}, {"id": 29, "question": "29. Do you think college students receive enough education about data privacy and cybersecurity?", "total": 67, "chart": "doughnut", "category": "yesno", "multi": false, "responses": [{"label": "Somewhat", "value": 31}, {"label": "No", "value": 21}, {"label": "Yes", "value": 12}, {"label": "Not sure", "value": 3}]}, {"id": 30, "question": "30. What would help you become more aware of data privacy?", "total": 67, "chart": "bar", "category": "multi", "multi": true, "responses": [{"label": "Cybersecurity awareness campaigns", "value": 37}, {"label": "Social media awareness", "value": 30}, {"label": "Online courses", "value": 26}, {"label": "College workshops", "value": 22}, {"label": "Practical demonstrations", "value": 22}, {"label": "Government awareness programs", "value": 13}, {"label": "Other", "value": 8}]}];
-const KEY_FINDINGS = [{"icon": "fa-user-shield", "value": 79, "label": "Have heard of Data Privacy"}, {"icon": "fa-sliders", "value": 82, "label": "Check social-media privacy settings"}, {"icon": "fa-key", "value": 82, "label": "Use different passwords"}, {"icon": "fa-shield-halved", "value": 85, "label": "Use Two-Factor Authentication"}, {"icon": "fa-mobile-screen", "value": 81, "label": "Know/check app permissions"}, {"icon": "fa-fish-fins", "value": 75, "label": "Know or have heard of phishing"}];
-let chartInstances = [];
-
-const palette = [
-  '#1769e0','#4f8df7','#6c63ff','#16a085','#f39c12','#e74c3c',
-  '#00a8cc','#8e44ad','#2ecc71','#e67e22','#34495e','#1abc9c'
-];
-
-function escapeHTML(value) {
-  return String(value).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
-}
-
-function renderFindings() {
-  const grid = document.getElementById('findingsGrid');
-  grid.innerHTML = KEY_FINDINGS.map((f,i) => `
-    <div class="finding reveal" style="transition-delay:${i*70}ms">
-      <i class="fa-solid ${escapeHTML(f.icon)}"></i>
-      <div class="percent"><span class="counter" data-value="${f.value}">0</span>%</div>
-      <p>${escapeHTML(f.label)}</p>
-    </div>
-  `).join('');
-  observeReveals();
-}
-
-function chartConfig(item) {
-  const labels = item.responses.map(r => r.label);
-  const values = item.responses.map(r => r.value);
-  const colors = item.responses.map((_,i) => palette[i % palette.length]);
-
-  const common = {
-    responsive:true,
-    maintainAspectRatio:false,
-    animation:{
-      duration:1400,
-      easing:'easeOutQuart'
-    },
-    plugins:{
-      legend:{
-        display:item.chart === 'doughnut',
-        position:'bottom',
-        labels:{usePointStyle:true,padding:16,font:{size:10}}
-      },
-      tooltip:{
-        backgroundColor:'#0b1f3a',
-        padding:12,
-        displayColors:true,
-        callbacks:{
-          label:(ctx) => {
-            const v = ctx.raw;
-            const sum = values.reduce((a,b)=>a+b,0);
-            const percent = sum ? ((v/sum)*100).toFixed(1) : 0;
-            return ` ${ctx.label}: ${v} (${percent}%)`;
-          }
-        }
-      }
-    },
-    scales:{
-      x:{
-        grid:{display:false},
-        ticks:{font:{size:10},color:'#718096',maxRotation:45,minRotation:0}
-      },
-      y:{
-        beginAtZero:true,
-        grid:{color:'#edf2f7'},
-        ticks:{font:{size:10},color:'#718096',precision:0}
-      }
-    }
-  };
-
-  if(item.chart === 'doughnut') {
-    return {
-      type:'doughnut',
-      data:{labels,datasets:[{data:values,backgroundColor:colors,borderColor:'#fff',borderWidth:3,hoverOffset:10}]},
-      options:{...common,cutout:'64%'}
-    };
-  }
-
-  const horizontal = item.chart === 'horizontalBar';
-  return {
-    type:'bar',
-    data:{labels,datasets:[{label:'Responses',data:values,backgroundColor:colors,borderRadius:8,maxBarThickness:42}]},
-    options:{
-      ...common,
-      indexAxis: horizontal ? 'y' : 'x',
-      scales: horizontal ? {
-        x:{beginAtZero:true,grid:{color:'#edf2f7'},ticks:{precision:0,font:{size:10},color:'#718096'}},
-        y:{grid:{display:false},ticks:{font:{size:10},color:'#718096'}}
-      } : common.scales
-    }
-  };
-}
-
-function renderCharts() {
-  chartInstances.forEach(c => c.destroy());
-  chartInstances = [];
-
-  const container = document.getElementById('charts');
-
-  // Four most important survey areas:
-  // Q6  - Basic awareness of data privacy
-  // Q10 - Privacy-policy reading behaviour
-  // Q21 - Two-factor authentication
-  // Q24 - Phishing awareness
-  const importantIds = [6, 10, 21, 24];
-  const data = importantIds
-    .map(id => SURVEY_DATA.find(item => item.id === id))
-    .filter(Boolean);
-
-  container.innerHTML = data.map((item, i) => `
-    <article class="chart-card reveal" style="transition-delay:${i*100}ms">
-      <div class="meta">
-        <span class="qno">Question ${String(item.id).padStart(2,'0')}</span>
-        <span class="total">${item.total} respondents</span>
+    <!-- Contact -->
+    <section id="contact" data-animate>
+      <h2 class="text-4xl font-bold section-title mb-12">Let's Collaborate</h2>
+      <div class="bg-gray-800 p-8 rounded-xl shadow-2xl border-t-4 border-red-500 max-w-xl mx-auto">
+        <p class="text-lg text-gray-300 mb-6 text-center">
+          I’m currently accepting select projects. Reach out directly for rates and availability.
+        </p>
+        <div class="flex items-center space-x-4 p-3 bg-gray-700 rounded-lg justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="text-red-500">
+            <rect x="3" y="4" width="18" height="16" rx="2" />
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+          </svg>
+          <a href="mailto:kaushikpatil.work20@gmail.com"
+            class="text-white font-medium hover:text-red-400 transition">kaushikpatil.work20@gmail.com</a>
+        </div>
+        <p class="mt-8 text-center text-sm text-gray-400">
+          Resume coming soon — email for full credits & project history.
+        </p>
       </div>
-      <h3 class="chart-title">${escapeHTML(item.question)}</h3>
-      <div class="chart-box"><canvas id="chart-${item.id}"></canvas></div>
-      <div class="pills">
-        ${item.responses.map(r => `<span class="pill">${escapeHTML(r.label)} — <b>${r.value}</b></span>`).join('')}
-      </div>
-    </article>
-  `).join('');
+    </section>
+  </main>
 
-  data.forEach(item => {
-    const canvas = document.getElementById(`chart-${item.id}`);
-    if(canvas) chartInstances.push(new Chart(canvas, chartConfig(item)));
-  });
+  <!-- Footer -->
+  <footer class="bg-gray-900 py-6 mt-16 border-t border-gray-700">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-sm text-gray-400">
+      &copy; 2025 Kaushik Cuts. Developed for impact.
+    </div>
+  </footer>
 
-  observeReveals();
-}
-
-function animateCounters() {
-  document.querySelectorAll('.counter').forEach(el => {
-    const target = Number(el.dataset.value);
-    let start = null;
-    function step(ts) {
-      if(start === null) start = ts;
-      const p = Math.min((ts-start)/1100,1);
-      const eased = 1-Math.pow(1-p,3);
-      el.textContent = Math.round(target*eased);
-      if(p<1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  });
-}
-
-
-/* FIELD STUDY SLIDESHOW */
-const slides=[...document.querySelectorAll('.photo-slide')],dots=[...document.querySelectorAll('.slide-dot')],prev=document.querySelector('.slide-arrow.prev'),next=document.querySelector('.slide-arrow.next'),showBox=document.getElementById('fieldSlideshow');let currentSlide=0,slideTimer;function showSlide(i){currentSlide=(i+slides.length)%slides.length;slides.forEach((x,n)=>x.classList.toggle('active',n===currentSlide));dots.forEach((x,n)=>x.classList.toggle('active',n===currentSlide))}function startSlideshow(){clearInterval(slideTimer);slideTimer=setInterval(()=>showSlide(currentSlide+1),3000)}prev?.addEventListener('click',()=>{showSlide(currentSlide-1);startSlideshow()});next?.addEventListener('click',()=>{showSlide(currentSlide+1);startSlideshow()});dots.forEach((d,i)=>d.addEventListener('click',()=>{showSlide(i);startSlideshow()}));showBox?.addEventListener('mouseenter',()=>clearInterval(slideTimer));showBox?.addEventListener('mouseleave',startSlideshow);showSlide(0);startSlideshow();
-
-function observeReveals() {
-  const items = document.querySelectorAll('.reveal:not(.observed)');
-  const observer = new IntersectionObserver((entries,obs) => {
-    entries.forEach(entry => {
-      if(entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        entry.target.classList.add('observed');
-        obs.unobserve(entry.target);
-      }
+  <!-- JS: Animate sections on scroll -->
+  <script>
+    const elements = document.querySelectorAll('[data-animate]');
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
     });
-  }, {threshold:.12});
-  items.forEach(el => observer.observe(el));
-}
-
-renderFindings();
-renderCharts();
-
-
-const findingsObserver = new IntersectionObserver(entries => {
-  entries.forEach(entry => {
-    if(entry.isIntersecting) {
-      animateCounters();
-      findingsObserver.disconnect();
-    }
-  });
-}, {threshold:.25});
-findingsObserver.observe(document.getElementById('findingsGrid'));
-
-observeReveals();
-</script>
+    elements.forEach(el => observer.observe(el));
+  </script>
 </body>
 </html>
